@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "status": "configuration_required",
+  "metric": "actual_visitors",
+  "source": {
+    "name": "한국문화관광연구원 관광자원통계서비스",
+    "url": "https://www.data.go.kr/data/15000366/openapi.do",
+    "method": "주요 유료관광지의 월별 내국인·외국인 입장객 합계"
+  },
+  "period": {
+    "start": null,
+    "end": null
+  },
+  "generatedAt": null,
+  "items": []
+}

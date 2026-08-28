@@ -1,0 +1,20 @@
+{
+  "product": "동해로",
+  "currentVersion": "2.0.0",
+  "versions": [
+    {
+      "version": "1.0.0",
+      "status": "stable",
+      "path": "/versions/v1/index.html",
+      "releasedAt": "2026-08-28",
+      "recommendation": "장소 유형과 일정 조건 기반"
+    },
+    {
+      "version": "2.0.0",
+      "status": "beta",
+      "path": "/versions/v2/index.html",
+      "releasedAt": "2026-08-28",
+      "recommendation": "최근 방문 데이터 기반"
+    }
+  ]
+}

@@ -1,0 +1,777 @@
+﻿<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>거제 여행 플래너</title>
+<meta name="description" content="울산 출발 1인 거제 여행 플래너 — 당일치기·1박2일. 핫플 40여 곳을 관심사로 추천하고, 시간표가 있는 일정으로 자동 계획, 네이버 지도 전체코스 매핑, 카카오 실시간 길찾기.">
+
+<style>
+  :root {
+    --bg:#f2f4f3; --surface:#fff; --surface-2:#e9efec;
+    --ink:#16302e; --ink-2:#506361; --ink-3:#83938f; --line:#dde5e1;
+    --sea:#0e7c86; --sea-d:#0a575f; --sea-l:#d8ecea;
+    --coral:#db5238; --coral-l:#fbe5df; --sun:#c07d23;
+    --naver:#03c75a; --naver-d:#0a7a3d; --kakao:#f2c200; --kakao-d:#7a5c00;
+    --shadow-sm:0 1px 2px rgba(16,48,46,.06);
+    --shadow:0 2px 4px rgba(16,48,46,.05),0 10px 24px -14px rgba(16,48,46,.22);
+    --r:14px;
+    --font:"Malgun Gothic","맑은 고딕","Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html{color-scheme:light;-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3,h4,p,ul,figure{margin:0}
+  button,input,select{font-family:var(--font);font-size:1rem}
+  a{color:var(--sea-d)}
+  img,svg{max-width:100%}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 clamp(14px,4vw,36px)}
+
+  .topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;gap:12px;min-height:56px}
+  .brand{font-weight:700;font-size:1.02rem;margin-right:auto;letter-spacing:-.01em}
+  .brand span{color:var(--sea)}
+  .seg{display:inline-flex;background:var(--surface-2);border-radius:999px;padding:3px;gap:2px}
+  .seg button{border:0;background:transparent;cursor:pointer;color:var(--ink-2);font-weight:700;font-size:.9rem;padding:8px 14px;border-radius:999px;min-height:40px}
+  .seg button[aria-pressed="true"]{background:var(--sea);color:#fff}
+
+  .hero{background:linear-gradient(180deg,var(--sea-l),var(--bg));border-bottom:1px solid var(--line)}
+  .hero .wrap{padding:30px 0 26px}
+  .kicker{font-weight:700;font-size:.8rem;letter-spacing:.12em;color:var(--sea-d);margin-bottom:10px}
+  h1.title{font-size:clamp(1.55rem,5.2vw,2.3rem);font-weight:700;line-height:1.16;letter-spacing:-.015em}
+  h1.title b{color:var(--coral)}
+  .facts{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px;list-style:none;padding:0}
+  .facts li{font-size:.82rem;font-weight:700;background:var(--surface);border:1px solid var(--line);color:var(--ink-2);padding:5px 10px;border-radius:999px}
+  .mode-line{margin-top:14px;font-size:.92rem;color:var(--ink-2)}
+
+  section{padding:clamp(26px,5vw,46px) 0}
+  section+section{border-top:1px solid var(--line)}
+  .eyebrow{font-weight:700;font-size:.78rem;letter-spacing:.13em;text-transform:uppercase;color:var(--sea);margin-bottom:8px}
+  h2.st{font-size:clamp(1.3rem,3.6vw,1.7rem);font-weight:700;letter-spacing:-.01em}
+  .lede{color:var(--ink-2);margin-top:8px;max-width:62ch;font-size:.96rem}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow-sm)}
+
+  .rain-alert{background:var(--coral-l);border:1px solid var(--coral);border-radius:var(--r);padding:14px 16px;margin:16px 0 18px;font-size:.92rem;line-height:1.6}
+  .rain-alert b{color:var(--coral)}
+  .wx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .wx{padding:16px}
+  .wx .d{font-size:.82rem;color:var(--ink-2);display:flex;justify-content:space-between}
+  .wx .d b{color:var(--ink);font-size:.95rem}
+  .wx .t{font-size:1.7rem;font-weight:700;margin:6px 0 2px}
+  .wx .t small{font-size:1rem;color:var(--ink-3);font-weight:700}
+  .wx .c{font-weight:700;color:var(--sea-d)}
+  .wx ul{list-style:none;padding:0;margin:8px 0 0}
+  .wx li{font-size:.84rem;color:var(--ink-2);display:flex;justify-content:space-between;padding:2px 0}
+  .wx.warn{background:var(--sea-l);border-color:var(--sea)}
+  .src{font-size:.74rem;color:var(--ink-3);margin-top:12px}
+  .src a{color:var(--ink-2)}
+
+  .map-note{background:var(--surface-2);border-radius:10px;padding:10px 12px;font-size:.84rem;color:var(--ink-2);margin-bottom:12px}
+  .map-note b{color:var(--sea-d)}
+  .mapbox{padding:12px}
+  .mapbox svg{width:100%;height:auto;display:block;border-radius:10px;background:#eef3f2}
+  .legend{display:flex;flex-wrap:wrap;gap:6px 12px;padding:10px 4px 2px;font-size:.74rem;color:var(--ink-2)}
+  .legend i{width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:5px}
+  .maptools{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+
+  .btn{display:inline-flex;align-items:center;gap:6px;font-size:.86rem;font-weight:700;cursor:pointer;background:var(--surface);color:var(--sea-d);border:1px solid var(--sea);border-radius:9px;padding:9px 13px;min-height:42px;text-decoration:none}
+  .btn:hover{background:var(--sea-l)}
+  .btn.solid{background:var(--sea);color:#fff;border-color:var(--sea)}
+  .btn.solid:hover{background:var(--sea-d)}
+  .btn.ghost{border-color:var(--line);color:var(--ink-2)}
+  .btn.sm{min-height:36px;padding:6px 10px;font-size:.8rem}
+  .btn[aria-disabled="true"]{opacity:.4;pointer-events:none}
+  .btn.nav{border-color:var(--naver);color:var(--naver-d)}
+  .btn.nav:hover{background:#e3f8ec}
+  .btn.nav.solid{background:var(--naver);color:#fff;border-color:var(--naver)}
+  .btn.kko{border-color:var(--kakao);color:var(--kakao-d)}
+  .btn.kko:hover{background:#fdf6da}
+
+  .controls{display:flex;flex-direction:column;gap:16px;margin:18px 0 20px}
+  .field>.lbl{font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);margin-bottom:8px;display:block}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{font-size:.88rem;cursor:pointer;background:var(--surface);color:var(--ink);border:1px solid var(--line);padding:8px 13px;border-radius:999px;min-height:40px}
+  .chip[aria-pressed="true"]{background:var(--sea);border-color:var(--sea);color:#fff}
+  .row-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .toggle{display:inline-flex;align-items:center;gap:8px;font-size:.88rem;color:var(--ink-2);cursor:pointer}
+  .toggle input{width:18px;height:18px;accent-color:var(--sea)}
+  .hint{font-size:.8rem;color:var(--ink-3);margin-top:8px;line-height:1.5}
+  .hint b{color:var(--ink-2)}
+
+  .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:22px;align-items:start}
+  @media (max-width:960px){.grid{grid-template-columns:1fr}}
+
+  .rank-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .rank-hd h3{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+  .cnt{font-size:.8rem;color:var(--ink-3)}
+  .results{display:flex;flex-direction:column;gap:10px}
+  .place{padding:14px}
+  .place .top{display:flex;gap:10px;align-items:flex-start}
+  .place .rk{font-weight:700;color:var(--sea);min-width:20px}
+  .place .nm{font-weight:700;font-size:1.02rem;line-height:1.3;flex:1}
+  .place .add{border:1px solid var(--sea);background:var(--surface);color:var(--sea-d);font-weight:700;font-size:.8rem;border-radius:8px;padding:7px 10px;cursor:pointer;min-height:38px;white-space:nowrap}
+  .place .add[aria-pressed="true"]{background:var(--sea);color:#fff}
+  .place .add[aria-pressed="true"]::before{content:"\2713 "}
+  .place .where{font-size:.78rem;color:var(--ink-3);margin:4px 0 0 30px}
+  .place .tags{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0 0 30px}
+  .tg{font-size:.72rem;font-weight:700;padding:3px 7px;border-radius:5px;background:var(--surface-2);color:var(--ink-2)}
+  .tg.book{background:var(--coral-l);color:var(--coral)}
+  .tg.indoor{background:var(--sea-l);color:var(--sea-d)}
+  .tg.off{background:#efe3ef;color:#7a4a7a}
+  .place .desc{font-size:.86rem;color:var(--ink-2);margin:8px 0 0 30px}
+  .place .mlinks{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 0 30px}
+
+  /* itinerary panel */
+  .plan{padding:16px;position:sticky;top:68px}
+  .plan h3{font-size:1.05rem;font-weight:700}
+  .plan .sub{font-size:.76rem;color:var(--ink-3);margin:2px 0 10px}
+  .plan .empty{color:var(--ink-2);font-size:.9rem}
+  .plan-top{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+  .tl-start,.tl-end{display:flex;align-items:center;gap:8px;font-weight:700;font-size:.84rem}
+  .tl-start input[type=time]{border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:.88rem;background:var(--surface)}
+  .tl-drive{font-size:.74rem;color:var(--ink-3);padding:4px 0 4px 22px;position:relative}
+  .tl-drive::before{content:"";position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--line)}
+  .tl-drive a{font-weight:700;text-decoration:none;border-bottom:1px solid currentColor}
+  .tl-stop{display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:9px 0 9px 22px;position:relative}
+  .tl-stop+.tl-stop{border-top:1px dashed var(--line)}
+  .tl-stop::before{content:"";position:absolute;left:3px;top:14px;width:9px;height:9px;border-radius:50%;background:#fff;border:2px solid var(--coral)}
+  .tl-time{font-weight:700;font-size:.82rem;color:var(--sea-d);font-variant-numeric:tabular-nums}
+  .tl-name{font-weight:700;font-size:.94rem;grid-row:2;grid-column:1}
+  .tl-sub{grid-row:3;grid-column:1;font-size:.72rem;color:var(--ink-3)}
+  .tl-ctrls{grid-row:1/4;grid-column:2;display:flex;flex-direction:column;gap:3px}
+  .tl-ctrls button{width:32px;height:30px;border:1px solid var(--line);background:var(--surface);border-radius:7px;cursor:pointer;font-size:.78rem;color:var(--ink-2);line-height:1;padding:0}
+  .tl-ctrls button:hover{border-color:var(--sea);color:var(--sea)}
+  .tl-div{display:flex;align-items:center;gap:8px;margin:10px 0;padding:9px 11px;background:var(--surface-2);border-radius:9px;font-weight:700;font-size:.8rem;color:var(--ink-2)}
+  .tl-div .mv{margin-left:auto;display:flex;gap:3px}
+  .tl-div .mv button{width:30px;height:28px;border:1px solid var(--line);background:var(--surface);border-radius:6px;cursor:pointer;color:var(--ink-2);font-size:.75rem;padding:0}
+  .dtot{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);font-size:.78rem;color:var(--ink-2)}
+  .warnl{margin-top:9px;font-size:.78rem;color:var(--sun);background:var(--surface-2);border-radius:8px;padding:8px 10px}
+  .warnl.bad{color:var(--coral);background:var(--coral-l)}
+  .plan .cta{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+
+  .mini-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .mini{padding:14px}
+  .mini .mh{font-weight:700}
+  .mini .ma{font-size:.74rem;font-weight:700;color:var(--sea)}
+  .mini .md{font-size:.84rem;color:var(--ink-2);margin-top:6px}
+  ul.check{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:8px 22px}
+  ul.check li{padding-left:22px;position:relative;color:var(--ink-2);font-size:.9rem}
+  ul.check li::before{content:"\2713";position:absolute;left:0;color:var(--sea);font-weight:700}
+  ul.check li b{color:var(--ink)}
+
+  footer{padding:26px 0 96px;border-top:1px solid var(--line);color:var(--ink-3);font-size:.78rem}
+  footer p{margin-bottom:7px;max-width:74ch}
+  footer .disc{color:var(--sun)}
+
+  .fab{position:fixed;right:14px;bottom:16px;z-index:60;display:none;align-items:center;gap:7px;background:var(--coral);color:#fff;border:0;cursor:pointer;font-weight:700;font-size:.9rem;border-radius:999px;padding:12px 18px;box-shadow:var(--shadow)}
+  .fab b{background:rgba(255,255,255,.25);border-radius:999px;padding:1px 8px}
+  @media (max-width:960px){
+    .fab.on{display:inline-flex}
+    .plan{position:static}
+  }
+  @media (max-width:600px){
+    body{font-size:15.5px}
+    .place .where,.place .tags,.place .desc,.place .mlinks{margin-left:0}
+  }
+</style>
+
+<h2 class="sr-only">울산에서 출발하는 1인 거제 여행 계획 도구. 당일치기와 1박2일 중 선택, 8월 29~30일 비 예보 반영. 거제 핫플레이스 40여 곳을 관심사로 추천하고, 담은 곳을 이동 순서에 맞춰 시각이 들어간 일정으로 자동 계획하며, 순서 바꾸기·자동 동선정렬·네이버 지도 전체코스 매핑·카카오 실시간 길찾기를 제공합니다.</h2>
+
+<div class="topbar"><div class="wrap">
+  <span class="brand">거제 <span>여행 플래너</span></span>
+  <div class="seg" id="modeSeg" role="group" aria-label="여행 방식">
+    <button data-mode="day" aria-pressed="false" type="button">당일치기</button>
+    <button data-mode="stay" aria-pressed="true" type="button">1박 2일</button>
+  </div>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <p class="kicker">울산 출발 · 개인차량 · 1인</p>
+  <h1 class="title">고르면 <b>시각이 들어간 일정</b>으로 계획해 주는 거제 플래너</h1>
+  <ul class="facts">
+    <li>8/29(토) 10:00 울산 출발</li><li>당일치기 또는 1박2일</li>
+    <li>고속도로 자가운전</li><li>핫플 40여 곳 · 카페 · 맛집 · 휴식</li>
+  </ul>
+  <p class="mode-line" id="modeLine"></p>
+</div></header>
+
+<main>
+  <section id="weather"><div class="wrap">
+    <p class="eyebrow">날씨</p>
+    <h2 class="st">여행 기간 예보 (8/29–8/30)</h2>
+    <div class="rain-alert"><b>⚠️ 두 날 모두 비 예보입니다.</b> 기상청 단기예보 기준 8/29·8/30 부산·울산·경남 <b>예상 강수량 20–60mm</b>(곳에 따라 소강). <b>외도·해금강 유람선 결항 가능성</b>이 크고, 야외 위주는 <b>실내·우천 대비 코스</b> 권장. 출발 전날 시간대별 예보 재확인.</div>
+    <div class="wx-grid">
+      <div class="card wx"><div class="d"><b>8월 29일 토</b><span>도착일</span></div><div class="t">약 29°<small> / 24°</small></div><div class="c">흐리고 비 (소강 반복)</div><ul><li><span>예상 강수량</span><span>20–60 mm</span></li><li><span>형태</span><span>곳에 따라 요란한 비</span></li><li><span>습도</span><span>매우 높음</span></li></ul></div>
+      <div class="card wx"><div class="d"><b>8월 30일 일</b><span>둘째날</span></div><div class="t">약 28°<small> / 24°</small></div><div class="c">대체로 흐리고 비</div><ul><li><span>예상 강수량</span><span>20–60 mm</span></li><li><span>바람</span><span>남해안 다소 강</span></li><li><span>참고</span><span>오전~초저녁 비</span></li></ul></div>
+      <div class="card wx warn"><div class="d"><b>영향 &amp; 대비</b><span></span></div><p style="font-size:.86rem;margin:6px 0 0;color:var(--ink)"><b>유람선</b> 비·풍랑 시 결항 — 당일 아침 선사 확인. <b>빗길 운전</b> 감속·차간거리, 와이퍼·타이어 점검. <b>여차–홍포 비포장</b>은 비 오면 진입 금지. <b>몽돌해변</b> 미끄럼 주의.</p></div>
+    </div>
+    <p class="src">예보 기준일 2026-08-28 · <a href="https://www.weather.go.kr/w/forecast/overall/short-term.do">기상청 단기예보</a>, <a href="https://www.weather.go.kr/w/special-report/overall.do">특보</a>, <a href="https://www.accuweather.com/ko/kr/geoje/223797/daily-weather-forecast/223797">AccuWeather</a>, <a href="https://www.weatheri.co.kr/forecast/forecast01.php">웨더아이</a>. 도착 전날 재확인.</p>
+  </div></section>
+
+  <section id="map"><div class="wrap">
+    <p class="eyebrow">위치 · 동선</p>
+    <h2 class="st">어디에 있는지부터</h2>
+    <p class="lede">거제는 명소가 섬 전체에 흩어져 있어 <b>방향을 정해 한 바퀴</b> 도는 게 핵심입니다. 아래는 대략적 위치이고, 담으면 오른쪽에서 <b>시각이 들어간 일정</b>으로 자동 계획됩니다.</p>
+    <div class="map-note">🚦 <b>네이버·카카오 지도는 실시간 교통 반영</b>. 일정을 만들면 <b>네이버 지도에 전체 코스</b>가 매핑되는 버튼과 구간별 카카오 길찾기가 생깁니다.</div>
+    <div class="card mapbox">
+      <svg id="svgmap" viewBox="0 0 100 100" role="img" aria-label="거제도 명소 위치 개략도">
+        <path id="island" d="M30,22 C34,15 46,13 55,16 C61,14 70,12 77,17 C86,22 88,32 84,40 C89,47 88,58 82,63 C85,72 80,82 70,84 C68,80 64,80 62,84 C58,90 50,91 45,86 C40,90 32,88 30,80 C22,78 17,68 21,58 C14,50 15,36 22,30 C24,26 27,24 30,22 Z" fill="#dcebe8" stroke="#9dc4bd" stroke-width="0.6"/>
+        <line x1="84" y1="22" x2="95" y2="12" stroke="#9dc4bd" stroke-width="0.8" stroke-dasharray="1.4 1.2"/>
+        <line x1="20" y1="46" x2="9" y2="44" stroke="#9dc4bd" stroke-width="0.8" stroke-dasharray="1.4 1.2"/>
+        <text x="88" y="10" font-size="2.6" fill="#6f8b86">거가대교</text>
+        <text x="2" y="41" font-size="2.6" fill="#6f8b86">거제대교</text>
+        <text x="40" y="52" font-size="3" fill="#a7bdb8">거제도</text>
+        <polyline id="routeLine" fill="none" stroke="var(--coral)" stroke-width="0.7" stroke-dasharray="1.6 1.4" opacity="0.85"></polyline>
+        <g id="dots"></g>
+      </svg>
+      <div class="legend" id="legend"></div>
+      <div class="maptools">
+        <a class="btn nav sm" id="mapNaver" href="https://map.naver.com/p/search/%EA%B1%B0%EC%A0%9C%EB%8F%84" target="_blank" rel="noopener">네이버 지도에서 거제</a>
+        <a class="btn kko sm" id="mapKakao" href="https://map.kakao.com/link/search/%EA%B1%B0%EC%A0%9C%EB%8F%84" target="_blank" rel="noopener">카카오맵에서 거제</a>
+      </div>
+    </div>
+  </div></section>
+
+  <section id="builder"><div class="wrap">
+    <p class="eyebrow">추천 &amp; 계획</p>
+    <h2 class="st">관심사를 고르면 일정으로 짜 드립니다</h2>
+    <p class="lede">유형을 고르면 핫플이 점수순으로 정렬됩니다. <b>담기</b>를 누르면 오른쪽 <b>일정</b>에 이동 순서대로 배치되고, 출발 시각부터 도착·출발 시간이 계산됩니다. 순서는 <b>▲▼</b>로 바꾸거나 <b>동선 자동정렬</b>로 최적화하세요.</p>
+    <div class="controls">
+      <div class="field"><span class="lbl">관심사 (복수 선택)</span><div class="chips" id="catChips"></div></div>
+      <div class="field"><span class="lbl">여행 강도</span><div class="chips" id="intensity"></div></div>
+      <div class="field"><span class="lbl">빠른 시작</span>
+        <div class="row-actions">
+          <button class="btn sm" type="button" id="loadDefault">기본 추천 코스</button>
+          <button class="btn sm" type="button" id="loadRain">☔ 우천 대비 코스</button>
+          <button class="btn ghost sm" type="button" id="clearPlan">비우기</button>
+          <label class="toggle"><input type="checkbox" id="offToggle"> 거제 밖(절영·남해 독일마을) 포함</label>
+        </div>
+        <p class="hint" id="qsHint"></p>
+      </div>
+    </div>
+    <div class="grid">
+      <div>
+        <div class="rank-hd"><h3>핫플 추천 순위</h3><span class="cnt" id="cnt"></span></div>
+        <div class="results" id="results"></div>
+        <button class="btn ghost sm" id="moreBtn" type="button" hidden style="margin-top:8px"></button>
+      </div>
+      <aside class="card plan" id="plan" aria-live="polite">
+        <h3>내 일정 <span style="font-weight:400;color:var(--ink-3);font-size:.8rem">· 자동 계획</span></h3>
+        <p class="sub" id="savedNote">브라우저에 자동 저장</p>
+        <div class="plan-top">
+          <button class="btn nav sm" type="button" id="optBtn">🧭 동선 자동정렬</button>
+        </div>
+        <p class="empty" id="planEmpty">아직 담은 곳이 없습니다. <b>기본 추천 코스</b>를 눌러 보세요.</p>
+        <div id="planBody"></div>
+      </aside>
+    </div>
+  </div></section>
+
+  <section id="lodging"><div class="wrap">
+    <p class="eyebrow">숙소</p>
+    <h2 class="st">1박이면 모텔로</h2>
+    <p class="lede" id="lodgeLede"></p>
+    <div class="mini-grid" id="lodgeGrid">
+      <div class="card mini"><div class="mh">고현 (시내) · 1순위</div><div class="ma">서부 · 복귀 동선</div><div class="md">모텔·비즈니스호텔 선택지가 가장 많고 식당·편의점 밀집. 남부까지 30–40분이지만 균형이 좋고 마지막 날 나가기 편함.</div></div>
+      <div class="card mini"><div class="mh">장승포 · 옥포 · 2순위</div><div class="ma">동부 · 거가대교 근처</div><div class="md">거가대교에서 가깝고 회센터·카페 많음. 늦게 도착하거나 아침 일찍 나갈 때. 항구 야경.</div></div>
+      <div class="card mini"><div class="mh">학동 · 구조라</div><div class="ma">남부 · 관광지 앞</div><div class="md">바람의 언덕·외도 첫 배와 가장 가깝지만 모텔은 적고 펜션·민박 위주(1인 8–13만).</div></div>
+    </div>
+    <p class="hint">예약: 여기어때·야놀자에서 <b>“거제 모텔”</b> 검색 → 주차·무인 여부·후기 확인. 8월 말 주말은 미리.<span id="lodgeDaytrip" hidden><br>※ 당일치기 — 숙소 불필요.</span></p>
+  </div></section>
+
+  <section id="food"><div class="wrap">
+    <p class="eyebrow">먹거리</p>
+    <h2 class="st">현지인 추천 식당 · 카페</h2>
+    <p class="lede">추천 목록에서 <b>맛집·카페</b> 태그 장소도 일정에 함께 담을 수 있습니다.</p>
+    <div class="mini-grid">
+      <div class="card mini"><div class="mh">백만석 / 예가</div><div class="ma">고현 · 서부</div><div class="md">멍게비빔밥·생선구이 정식.</div></div>
+      <div class="card mini"><div class="mh">유경회식당</div><div class="ma">예구 · 남동부</div><div class="md">자연산 회·아구탕·대구탕.</div></div>
+      <div class="card mini"><div class="mh">지세포 회·물회</div><div class="ma">지세포 · 동부</div><div class="md">현지인 물회, 혼밥 가능.</div></div>
+      <div class="card mini"><div class="mh">외포 대구탕 거리</div><div class="ma">외포항 · 북부</div><div class="md">거가대교에서 가장 가까운 식사.</div></div>
+      <div class="card mini"><div class="mh">몰리힐스</div><div class="ma">복항 · 매미성 옆</div><div class="md">대형 베이커리 카페, 오션뷰.</div></div>
+      <div class="card mini"><div class="mh">성포끝집 / 성포 카페</div><div class="ma">성포 · 서부</div><div class="md">물회·해물, 거제 최고 일몰.</div></div>
+      <div class="card mini"><div class="mh">온더선셋 / 씨야드</div><div class="ma">학동방면 / 거제식물원</div><div class="md">오션뷰·대형 카페.</div></div>
+      <div class="card mini"><div class="mh">도장포 선착장 카페</div><div class="ma">도장포 · 남부</div><div class="md">해금강 뷰, 유람선 대기 때.</div></div>
+    </div>
+  </div></section>
+
+  <section id="checklist"><div class="wrap">
+    <p class="eyebrow">출발 전</p>
+    <h2 class="st">떠나기 전 체크리스트</h2>
+    <ul class="check">
+      <li><b>비 예보 재확인</b> 8/28 저녁 기상청·네이버, 시간대별 강수</li>
+      <li><b>우비·우산·방수 신발</b> + 갈아입을 옷·수건·비닐봉투</li>
+      <li><b>유람선 운항 확인</b> 외도·해금강·지심도, 당일 아침 선사 전화</li>
+      <li><b>빗길 운전</b> 와이퍼·워셔액·타이어, 감속·차간거리</li>
+      <li><b>여차–홍포 비포장</b> 비 오면 진입 금지</li>
+      <li><b>거가대교 요금</b> 하이패스 또는 현금 8,000원(주말·소형)</li>
+      <li><b>주유</b> 울산에서 채우고 출발</li>
+      <li><b>네이버·카카오 지도 앱</b> 설치, 오프라인 지도 저장</li>
+      <li class="stay-only" hidden><b>모텔 예약</b> 8/28까지 확정, 주차·체크인 확인</li>
+    </ul>
+  </div></section>
+</main>
+
+<footer><div class="wrap">
+  <p class="disc">※ 소요시간·요금·운항·숙박·영업 정보는 참고용 추정치입니다. 방문·예약 전 현지 확인. 유람선은 당일 기상에 따라 결항됩니다. 일정 시각은 이동·관람 시간을 더한 계산값으로 실제와 차이가 있을 수 있습니다.</p>
+  <p>날씨 <a href="https://www.weather.go.kr/w/forecast/overall/short-term.do">기상청</a> · <a href="https://www.accuweather.com/ko/kr/geoje/223797/daily-weather-forecast/223797">AccuWeather</a> ｜ 명소·후기 <a href="https://kr.trip.com/travel-guide/attraction/geoje-si-14781/tourist-attractions/">트립닷컴</a> · <a href="https://tour.geoje.go.kr/">거제시 관광문화</a> · <a href="https://www.instagram.com/hotgeoje/">@hotgeoje</a> · <a href="https://www.siksinhot.com/theme/magazine/17813">식신</a> · <a href="https://www.diningcode.com/list.dc?query=%EA%B1%B0%EC%A0%9C%20%EB%B2%A0%EC%9D%B4%EC%BB%A4%EB%A6%AC%EC%B9%B4%ED%8E%98">다이닝코드</a> ｜ 드라이브 <a href="https://www.telltrip.com/domestic-travel/geoje-yeocha-hongpo-scenic-coastal-drive/">여차홍포</a> · 절영 <a href="https://www.telltrip.com/domestic-travel/busan-yeongdo-jaroyeong-coastal-walk-huinnyeoul/">텔트립</a> · 독일마을 <a href="https://german-village.kr/tour">공식</a> ｜ 길찾기 네이버 지도 · 카카오맵</p>
+  <p>개인 여행 계획용 도구입니다. 선택 내용은 이 브라우저에만 저장됩니다.</p>
+</div></footer>
+
+<button class="fab" id="fab" type="button">🧭 내 일정 <b id="fabN">0</b></button>
+
+<script>
+(function () {
+  "use strict";
+
+  /* leg: 거가대교(북)→동→남동→남→남서→중앙→서→거제대교 순서 / ll:[위도,경도](대략) */
+  var PLACES = [
+    { id:"oepo", n:"외포항 대구탕거리", q:"거제 외포항 대구탕", rg:"N", leg:2, x:57,y:16, ll:[34.9503,128.7015], cat:["food"], ap:3, min:60, desc:"거가대교에서 가장 가까운 식사. 맑은 대구탕 골목." },
+    { id:"ysk", n:"김영삼대통령기록전시관", q:"김영삼대통령기록전시관 거제", rg:"N", leg:3, x:63,y:12, ll:[34.9447,128.7166], cat:["indoor"], ap:2, min:30, indoor:true, desc:"거가대교 근처 소규모 전시. 오가며 15분." },
+    { id:"isudo", n:"이수도", q:"거제 이수도", rg:"N", leg:4, x:80,y:13, ll:[34.9689,128.7286], cat:["walk","food"], ap:2, min:150, desc:"5분 배로 들어가는 작은 섬. 둘레길·장어구이. 배 시간 확인." },
+    { id:"sono", n:"소노캄 거제·오션어드벤처", q:"소노캄 거제", rg:"N", leg:4, x:66,y:17, ll:[34.9662,128.6886], cat:["beach"], ap:3, min:180, desc:"마리나 리조트+워터파크. 물놀이·호캉스형." },
+    { id:"maemi", n:"매미성", q:"거제 매미성", rg:"N", leg:5, x:72,y:19, ll:[34.9585,128.7028], cat:["spot","drive"], ap:5, min:40, desc:"시민이 쌓은 지중해풍 성벽. 거제 대표 포토존. 무료·주차 협소, 오전 추천." },
+    { id:"molly", n:"몰리힐스 (카페)", q:"거제 몰리힐스", rg:"N", leg:5, x:74,y:22, ll:[34.9564,128.7005], cat:["cafe","walk"], ap:4, min:60, desc:"매미성 옆 대형 베이커리 카페. 테라스 오션뷰, 비와도 실내." },
+    { id:"daegeum", n:"대금산 전망대", q:"거제 대금산", rg:"N", leg:6, x:61,y:24, ll:[34.9490,128.6805], cat:["walk","spot"], ap:3, min:90, desc:"정상에서 진해만·부산 조망, 봄 진달래. 8부 능선까지 차로." },
+    { id:"okpo", n:"옥포대첩기념공원", q:"옥포대첩기념공원", rg:"E", leg:8, x:81,y:35, ll:[34.8853,128.6929], cat:["indoor","spot"], ap:3, min:40, desc:"이순신 옥포해전 승전지. 옥포만 전망대, 일부 실내." },
+    { id:"jsp", n:"장승포 수변공원·이순신공원", q:"거제 장승포 수변공원", rg:"E", leg:9, x:85,y:41, ll:[34.8740,128.7050], cat:["walk","spot"], ap:3, min:50, desc:"해안 산책·컨테이너 포차·버스킹. 밤엔 야경. 무료." },
+    { id:"seaworld", n:"거제씨월드·조선해양문화관", q:"거제씨월드", rg:"E", leg:10, x:83,y:47, ll:[34.8360,128.7030], cat:["indoor"], ap:3, min:100, indoor:true, desc:"벨루가·돌고래 공연 + 해양 전시. 대형 실내, 우천 OK. 공연 시간 확인." },
+    { id:"jisepo", n:"지세포항 회·물회", q:"거제 지세포 물회", rg:"E", leg:10, x:84,y:50, ll:[34.8447,128.7118], cat:["food"], ap:3, min:60, desc:"현지인 회·물회. 항구 뷰, 도착 첫 끼로 무난." },
+    { id:"gonggot", n:"공곶이", q:"거제 공곶이", rg:"SE", leg:12, x:85,y:55, ll:[34.8075,128.7060], cat:["spot","walk","drive"], ap:4, min:90, desc:"예구마을에서 돌계단 15분. 동백·수선화 정원과 몽돌. 신발 편하게." },
+    { id:"wahyeon", n:"와현모래숲해수욕장", q:"거제 와현모래숲해수욕장", rg:"SE", leg:13, x:82,y:58, ll:[34.8018,128.7003], cat:["beach","walk"], ap:3, min:90, desc:"고운 모래+솔숲 그늘. 가족적, 캠핑·물놀이." },
+    { id:"gujora", n:"구조라해수욕장·구조라성", q:"구조라해수욕장", rg:"SE", leg:14, x:80,y:61, ll:[34.7969,128.6879], cat:["beach","spot"], ap:3, min:90, desc:"몽돌+백사장. 뒷산 구조라성에서 윤돌섬·바다 조망(15분)." },
+    { id:"yundol", n:"윤돌섬 스노클링", q:"거제 윤돌섬", rg:"SE", leg:14, x:87,y:62, ll:[34.7905,128.6949], cat:["beach"], ap:3, min:150, book:true, desc:"구조라에서 카약/보트로 입도. 물 맑고 물고기 많음. 장비 대여·예약." },
+    { id:"mangchi", n:"망치몽돌해수욕장", q:"망치몽돌해수욕장", rg:"SE", leg:15, x:81,y:57, ll:[34.8003,128.6805], cat:["beach"], ap:3, min:90, desc:"한적·물 맑아 스노클링 적합. 평상·파라솔 대여." },
+    { id:"onsunset", n:"온더선셋 (카페)", q:"거제 온더선셋 카페", rg:"SE", leg:15, x:78,y:65, ll:[34.7986,128.6666], cat:["cafe"], ap:3, min:60, desc:"오션뷰 베이커리 카페. 학동·해금강 드라이브 중 휴식." },
+    { id:"hakdong", n:"학동흑진주몽돌해변·동백림", q:"학동몽돌해변", rg:"S", leg:16, x:66,y:74, ll:[34.7351,128.6284], cat:["beach","spot","walk"], ap:5, min:90, desc:"국내 최대 몽돌해변 1.2km. 파도에 자갈 구르는 소리, 뒤편 동백림 산책로." },
+    { id:"cablecar", n:"거제 파노라마 케이블카", q:"거제파노라마케이블카", rg:"S", leg:17, x:56,y:64, ll:[34.7490,128.6006], cat:["spot"], ap:4, min:80, desc:"노자산 정상 다도해 파노라마. 상부 실내 전망대, 노을·성수기 대기." },
+    { id:"forest", n:"거제자연휴양림·노자산 숲길", q:"거제자연휴양림", rg:"S", leg:17, x:54,y:60, ll:[34.7601,128.6003], cat:["walk"], ap:3, min:60, desc:"숲길 삼림욕. 케이블카와 연계, 비와도 우산 산책." },
+    { id:"hakhae", n:"학동~해금강 해안도로", q:"거제 학동 해금강 해안도로", rg:"S", leg:18, x:64,y:78, ll:[34.7220,128.6430], cat:["drive"], ap:3, min:30, desc:"바람의 언덕·신선대·해금강 잇는 해안 드라이브. 전망대 연속." },
+    { id:"sinseon", n:"신선대·함목", q:"거제 신선대", rg:"S", leg:19, x:69,y:80, ll:[34.7205,128.6600], cat:["spot","drive"], ap:4, min:30, desc:"바다로 뻗은 기암, 함목 몽돌해변 옆. 바람의 언덕과 도보 10분." },
+    { id:"windhill", n:"바람의 언덕", q:"거제 바람의언덕", rg:"S", leg:20, x:67,y:82, ll:[34.7170,128.6597], cat:["spot","drive"], ap:5, min:40, desc:"거제 시그니처 초원 언덕+풍차. 바람 강함(겉옷), 주말 낮 주차 정체." },
+    { id:"dojang", n:"도장포 선착장·카페", q:"거제 도장포", rg:"S", leg:21, x:66,y:80, ll:[34.7203,128.6620], cat:["cafe","food"], ap:3, min:40, desc:"외도·해금강 유람선 선착장. 전망 카페, 대기 시간 활용." },
+    { id:"haemuseum", n:"해금강테마박물관", q:"해금강테마박물관", rg:"S", leg:21, x:70,y:84, ll:[34.7233,128.6570], cat:["indoor"], ap:3, min:60, indoor:true, desc:"근현대 생활사·미술 컬렉션. 실내, 우천 대비 좋음." },
+    { id:"oedo", n:"외도 보타니아", q:"외도보타니아", rg:"S", leg:22, x:75,y:87, ll:[34.7063,128.6773], cat:["spot"], ap:5, min:170, book:true, desc:"섬 전체가 유럽식 정원. 유람선 왕복+체류 2.5~3h. 성수기 전날 예매, 비·풍랑 결항." },
+    { id:"haegeum", n:"해금강 (십자동굴)", q:"거제 해금강", rg:"S", leg:23, x:71,y:89, ll:[34.7008,128.6604], cat:["spot","drive"], ap:3, min:60, book:true, desc:"십자동굴·사자바위. 보통 외도와 같은 배. 우천 결항." },
+    { id:"myeongsa", n:"명사해수욕장", q:"거제 명사해수욕장", rg:"SW", leg:24, x:44,y:88, ll:[34.7210,128.5820], cat:["beach"], ap:3, min:60, desc:"남부면 긴 백사장. 조용한 해변." },
+    { id:"yeochabeach", n:"여차몽돌해수욕장", q:"거제 여차몽돌해수욕장", rg:"SW", leg:24, x:48,y:86, ll:[34.7175,128.5540], cat:["beach","walk"], ap:3, min:45, desc:"여차~홍포 드라이브 기점. 한적한 몽돌." },
+    { id:"yeocha", n:"여차~홍포 해안도로·홍포전망대", q:"거제 여차홍포해안도로", rg:"SW", leg:25, x:40,y:88, ll:[34.7100,128.5430], cat:["drive","spot"], ap:4, min:60, desc:"3.5km 명품 해안길, 8개 섬 파노라마. 일부 비포장 — 비 오면 진입 금지. 2.6km 지점 홍포전망대." },
+    { id:"jeogu", n:"저구항 (소매물도行)", q:"거제 저구항", rg:"SW", leg:25, x:38,y:84, ll:[34.7255,128.5460], cat:["walk"], ap:2, min:30, desc:"소매물도·매물도 여객선 선착장. 섬은 반나절 이상." },
+    { id:"geunpo", n:"근포마을 땅굴", q:"거제 근포마을 땅굴", rg:"SW", leg:26, x:34,y:82, ll:[34.7330,128.5620], cat:["spot","indoor"], ap:4, min:30, desc:"일제강점기 인공 동굴. 동굴 안에서 바다 역광 실루엣 샷 SNS 성지. 짧게." },
+    { id:"jungledome", n:"거제식물원 정글돔", q:"거제식물원 정글돔", rg:"C", leg:28, x:50,y:56, ll:[34.8207,128.5820], cat:["indoor","walk"], ap:4, min:90, indoor:true, desc:"국내 최대 유리 식물원, 열대수목 1만 주. 유리천장 빗방울 운치 — 우천 최고." },
+    { id:"seayard", n:"씨야드 (카페)", q:"거제 씨야드 카페", rg:"C", leg:28, x:52,y:57, ll:[34.8220,128.5840], cat:["cafe","walk"], ap:3, min:60, desc:"정글돔 근처 대형 카페. 휴식." },
+    { id:"gyeryong", n:"계룡산 전망대", q:"거제 계룡산", rg:"C", leg:29, x:45,y:50, ll:[34.8720,128.6010], cat:["walk","spot"], ap:2, min:90, desc:"고현 시가지·조선소 야경 조망. 등산 필요." },
+    { id:"pow", n:"거제포로수용소유적공원", q:"거제도포로수용소유적공원", rg:"W", leg:30, x:39,y:46, ll:[34.8830,128.6216], cat:["indoor"], ap:4, min:110, indoor:true, desc:"6·25 포로수용소 테마파크. 실내 전시 多, 우천·더위에 강함. 고현 시내." },
+    { id:"gohyeon", n:"고현 맛집 (백만석·예가)", q:"거제 백만석", rg:"W", leg:30, x:37,y:45, ll:[34.8900,128.6210], cat:["food"], ap:3, min:60, desc:"멍게비빔밥·생선구이 정식. 복귀 전 마지막 식사." },
+    { id:"dundeok", n:"둔덕기성 (폐왕성)", q:"거제 둔덕기성", rg:"W", leg:31, x:28,y:57, ll:[34.8300,128.5230], cat:["indoor","walk"], ap:2, min:60, desc:"고려 의종 유배지 산성. 성곽 둘레길·전망." },
+    { id:"seongpo", n:"성포항 일몰·감성카페", q:"거제 성포항", rg:"W", leg:32, x:30,y:52, ll:[34.9000,128.5510], cat:["spot","cafe","food"], ap:4, min:60, desc:"거제에서 가장 아름다운 일몰 명소. 감성 카페·물회·해물 밀집. 일몰 1시간 전 도착." },
+    { id:"jeolyeong", n:"절영해안산책로 (부산 영도)", q:"절영해안산책로", rg:"OUT", leg:-1, x:95,y:6, ll:[35.0782,129.0480], cat:["walk","drive","spot"], ap:4, min:120, off:true, desc:"부산 영도. 3km 무료 해안 산책길+흰여울문화마을. 울산→거제 경로에서 영도 방향 약 40분 우회. ※2026년 5월까지 정비 — 개방 상태 확인." },
+    { id:"german", n:"남해 독일마을·원예예술촌", q:"남해 독일마을", rg:"OUT", leg:99, x:5,y:93, ll:[34.8360,127.9055], cat:["spot","cafe","walk"], ap:4, min:150, off:true, desc:"경남 남해군. 독일식 마을+정원 테마촌(원예예술촌 입장 6,000원). 거제에서 차로 1시간 40분~2시간 — 연계 여행 시." }
+  ];
+
+  var RG = {
+    N:{ label:"북부·장목", c:"#3f8f7d" }, E:{ label:"동부·장승포", c:"#2f7fa0" },
+    SE:{ label:"남동부·구조라", c:"#5b9f57" }, S:{ label:"남부·바람의언덕", c:"#c98a2e" },
+    SW:{ label:"남서부·여차", c:"#b26a4a" }, C:{ label:"중앙·거제면", c:"#8a8a3c" },
+    W:{ label:"서부·고현", c:"#5b6ba0" }, OUT:{ label:"거제 밖(연계)", c:"#9a5a9a" }
+  };
+  var CAT = { spot:"포토·명소", beach:"해변·물놀이", cafe:"카페", food:"맛집", walk:"산책·휴식", drive:"드라이브", indoor:"역사·실내" };
+  var INTENSITY = {
+    day:  [ {n:3,l:"가볍게 3곳"}, {n:4,l:"보통 4곳"}, {n:5,l:"알차게 5곳"} ],
+    stay: [ {n:6,l:"여유 6곳"}, {n:8,l:"보통 8곳"}, {n:12,l:"알차게 12곳"} ]
+  };
+  var DEFAULT_COURSE = {
+    day:  ["maemi","hakdong","sinseon","windhill"],
+    stay: ["maemi","okpo","hakdong","sinseon","windhill","oedo","haegeum","jungledome","pow"]
+  };
+  var RAIN_COURSE = {
+    day:  ["maemi","jungledome","pow"],
+    stay: ["ysk","seaworld","haemuseum","jungledome","seayard","pow"]
+  };
+  var DHINT = {
+    day:  "매미성 → 학동몽돌 → 신선대 → 바람의 언덕(일몰). 점심·이동 포함 약 6시간.",
+    stay: "1일차 매미성·옥포·학동·신선대·바람의 언덕 → 남부 숙박 / 2일차 외도·해금강 → 정글돔 → 포로수용소 → 거제대교 복귀."
+  };
+  var RHINT = {
+    day:  "비 많이 오면 정글돔+포로수용소만. 매미성은 우산 쓰고 짧게, 몰리힐스에서 커피.",
+    stay: "실내 위주: 기록관·씨월드·해금강박물관·정글돔·포로수용소. 외도는 결항 확인 후."
+  };
+  var UL = { la:35.5384, ln:129.3114, nm:"울산", ll:[35.5384,129.3114] };
+  var GOHYEON = { la:34.8900, ln:128.6210, nm:"고현", ll:[34.8900,128.6210] };
+
+  var STORE = "geoje_planner_v4";
+  var state = { mode:"stay", cats:[], n:8, plan:[], off:false, start:"10:00", d2:"09:00", split:null };
+  try {
+    var s = JSON.parse(localStorage.getItem(STORE) || "null");
+    if (s && typeof s === "object") {
+      ["mode","start","d2"].forEach(function (k) { if (typeof s[k] === "string") state[k] = s[k]; });
+      if (Array.isArray(s.cats)) state.cats = s.cats;
+      if (typeof s.n === "number") state.n = s.n;
+      if (Array.isArray(s.plan)) state.plan = s.plan;
+      if (typeof s.off === "boolean") state.off = s.off;
+      if (typeof s.split === "number" || s.split === null) state.split = s.split;
+    }
+  } catch (e) {}
+  if (state.mode !== "day" && state.mode !== "stay") state.mode = "stay";
+  if (!INTENSITY[state.mode].some(function (o) { return o.n === state.n; })) state.n = state.mode === "day" ? 4 : 8;
+  function persist() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) {} }
+  var showAll = false;
+
+  var enc = encodeURIComponent;
+  function byId(id) { for (var i=0;i<PLACES.length;i++) if (PLACES[i].id===id) return PLACES[i]; return null; }
+  function poolList() { return PLACES.filter(function (p) { return state.off || !p.off; }); }
+  function scoreOf(p) { var v=p.ap; for (var i=0;i<p.cat.length;i++) if (state.cats.indexOf(p.cat[i])!==-1) v+=3; return v; }
+  function ranked() { return poolList().slice().sort(function (a,b) { var d=scoreOf(b)-scoreOf(a); return d!==0?d:a.leg-b.leg; }); }
+  function planPlaces() { return state.plan.map(byId).filter(Boolean); }
+
+  function haversine(a, b) {
+    var R=6371, dLat=(b[0]-a[0])*Math.PI/180, dLon=(b[1]-a[1])*Math.PI/180;
+    var s=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+    return 2*R*Math.asin(Math.sqrt(s));
+  }
+  function legDrive(a, b) {
+    var km = haversine(a.ll, b.ll);
+    var m = Math.round(km / 38 * 60) + 7;                 // 섬 도로 평균 38km/h + 버퍼
+    return Math.max(8, Math.min((a.off||b.off) ? 140 : 70, m));
+  }
+  function fmtDur(m) { var h=Math.floor(m/60), x=m%60; return h&&x ? h+"시간 "+x+"분" : h ? h+"시간" : x+"분"; }
+  function toMin(t) { var p=(t||"10:00").split(":"); return (+p[0])*60 + (+p[1] || 0); }
+  function toHHMM(m) { m=((m%1440)+1440)%1440; var h=Math.floor(m/60), x=m%60; return (h<10?"0":"")+h+":"+(x<10?"0":"")+x; }
+
+  /* ---------- Naver / Kakao ---------- */
+  function naver(q) { return "https://map.naver.com/p/search/" + enc(q); }
+  function kakao(q) { return "https://map.kakao.com/link/search/" + enc(q); }
+  function kakaoRoute(fromName, toName) { return "https://map.kakao.com/?sName=" + enc(fromName) + "&eName=" + enc(toName); }
+  /* 앱: 경유지 최대 5 */
+  function ptLat(o) { return o.la != null ? o.la : o.ll[0]; }
+  function ptLng(o) { return o.ln != null ? o.ln : o.ll[1]; }
+  function ptNm(o)  { return o.nm || o.n; }
+  function naverCourseApp(startPt, stops, endPt) {
+    if (!stops.length && !endPt) return null;
+    var pts = stops.slice();
+    var dest = endPt || pts.pop();
+    var mids = pts.slice(0, 5);   /* 네이버 앱 경유지 최대 5 */
+    var u = "nmap://route/car?slat=" + ptLat(startPt) + "&slng=" + ptLng(startPt) + "&sname=" + enc(ptNm(startPt)) +
+            "&dlat=" + ptLat(dest) + "&dlng=" + ptLng(dest) + "&dname=" + enc(ptNm(dest));
+    mids.forEach(function (m, i) { u += "&v"+(i+1)+"lat="+m.ll[0]+"&v"+(i+1)+"lng="+m.ll[1]+"&v"+(i+1)+"name="+enc(m.n); });
+    return u + "&appname=geoje-planner.html";
+  }
+  /* 웹 폴백: 출발↔도착 2점 (경유지는 앱에서) */
+  function naverCourseWeb(startPt, endObj) {
+    var s = ptLng(startPt) + "," + ptLat(startPt) + "," + enc(ptNm(startPt)) + ",,";
+    var e = ptLng(endObj) + "," + ptLat(endObj) + "," + enc(ptNm(endObj)) + ",,";
+    return "https://map.naver.com/p/directions/" + s + "/" + e + "/-/car";
+  }
+
+  /* ---------- elements ---------- */
+  var elCat=document.getElementById("catChips"), elInt=document.getElementById("intensity"),
+      elRes=document.getElementById("results"), elCnt=document.getElementById("cnt"),
+      elMore=document.getElementById("moreBtn"), elBody=document.getElementById("planBody"),
+      elEmpty=document.getElementById("planEmpty"), elDots=document.getElementById("dots"),
+      elRoute=document.getElementById("routeLine"), elLegend=document.getElementById("legend"),
+      elModeLine=document.getElementById("modeLine"), elQsHint=document.getElementById("qsHint"),
+      fab=document.getElementById("fab"), fabN=document.getElementById("fabN");
+
+  Object.keys(CAT).forEach(function (k) {
+    var b=document.createElement("button");
+    b.className="chip"; b.type="button"; b.textContent=CAT[k];
+    b.setAttribute("aria-pressed", state.cats.indexOf(k)!==-1 ? "true":"false");
+    b.addEventListener("click", function () {
+      var i=state.cats.indexOf(k);
+      if (i===-1) state.cats.push(k); else state.cats.splice(i,1);
+      b.setAttribute("aria-pressed", i===-1?"true":"false");
+      showAll=false; persist(); renderResults(); renderMap();
+    });
+    elCat.appendChild(b);
+  });
+  function renderIntensity() {
+    elInt.innerHTML="";
+    INTENSITY[state.mode].forEach(function (o) {
+      var b=document.createElement("button");
+      b.className="chip"; b.type="button"; b.textContent=o.l;
+      b.setAttribute("aria-pressed", o.n===state.n ? "true":"false");
+      b.addEventListener("click", function () { state.n=o.n; showAll=false; persist(); renderIntensity(); renderResults(); renderMap(); });
+      elInt.appendChild(b);
+    });
+  }
+  Object.keys(RG).forEach(function (k) {
+    var s=document.createElement("span");
+    s.innerHTML='<i style="background:'+RG[k].c+'"></i>'+RG[k].label;
+    elLegend.appendChild(s);
+  });
+  (function () { var s=document.createElement("span"); s.innerHTML='<i style="background:var(--coral)"></i>담은 곳(번호)'; elLegend.appendChild(s); })();
+
+  /* ---------- results ---------- */
+  function placeCard(p, idx) {
+    var inPlan = state.plan.indexOf(p.id)!==-1;
+    var el=document.createElement("div"); el.className="card place";
+    var tags=p.cat.map(function (c) { return '<span class="tg">'+CAT[c]+'</span>'; }).join("");
+    if (p.book) tags+='<span class="tg book">예약·배편</span>';
+    if (p.indoor) tags+='<span class="tg indoor">실내</span>';
+    if (p.off) tags+='<span class="tg off">거제 밖</span>';
+    el.innerHTML=
+      '<div class="top"><span class="rk">'+(idx+1)+'</span><span class="nm">'+p.n+'</span>'+
+      '<button class="add" type="button" aria-pressed="'+inPlan+'">'+(inPlan?"담김":"담기")+'</button></div>'+
+      '<div class="where">'+RG[p.rg].label+' · 관람 ~'+fmtDur(p.min)+'</div>'+
+      '<div class="tags">'+tags+'</div><div class="desc">'+p.desc+'</div>'+
+      '<div class="mlinks">'+
+      '<a class="btn nav sm" href="'+naver(p.q)+'" target="_blank" rel="noopener">네이버 지도</a>'+
+      '<a class="btn kko sm" href="'+kakao(p.q)+'" target="_blank" rel="noopener">카카오맵</a></div>';
+    el.querySelector(".add").addEventListener("click", function () { toggle(p.id); });
+    return el;
+  }
+  function renderResults() {
+    var list=ranked(), lim=showAll?list.length:state.n;
+    elRes.innerHTML="";
+    list.forEach(function (p,i) { if (i<lim) elRes.appendChild(placeCard(p,i)); });
+    elCnt.textContent=Math.min(lim,list.length)+" / "+list.length+"곳";
+    if (list.length>state.n) { elMore.hidden=false; elMore.textContent=showAll?"간략히":"나머지 "+(list.length-state.n)+"곳 더보기"; }
+    else elMore.hidden=true;
+  }
+  elMore.addEventListener("click", function () { showAll=!showAll; renderResults(); });
+
+  /* ---------- map ---------- */
+  function renderMap() {
+    var list=ranked();
+    var visIds=list.slice(0, showAll?list.length:state.n).map(function (p) { return p.id; });
+    var order=planPlaces();
+    elDots.innerHTML="";
+    PLACES.forEach(function (p) {
+      if (p.off && !state.off) return;
+      var inPlan=state.plan.indexOf(p.id)!==-1;
+      var vis=visIds.indexOf(p.id)!==-1;
+      var fill=inPlan ? "var(--coral)" : (vis ? RG[p.rg].c : "#c4d2ce");
+      var r=inPlan?2.4:1.7;
+      var g=document.createElementNS("http://www.w3.org/2000/svg","g");
+      g.setAttribute("transform","translate("+p.x+","+p.y+")");
+      g.style.cursor="pointer";
+      var num=inPlan ? (order.indexOf(p)+1) : "";
+      g.innerHTML='<circle r="3.6" fill="transparent"></circle>'+
+        '<circle r="'+r+'" style="fill:'+fill+'"><title>'+p.n+'</title></circle>'+
+        (inPlan?'<text y="-3.2" text-anchor="middle" font-size="3.2" font-weight="700" style="fill:var(--coral)">'+num+'</text>':'');
+      g.addEventListener("click", function () { toggle(p.id); });
+      elDots.appendChild(g);
+    });
+    elRoute.setAttribute("points", order.map(function (p) { return p.x+","+p.y; }).join(" "));
+  }
+
+  /* ---------- itinerary (시간표) ---------- */
+  function autoSplit(list) {
+    if (list.length <= 3) return list.length;
+    var boatIdx = -1;
+    list.forEach(function (p,i) { if (p.id==="oedo"||p.id==="haegeum") boatIdx = boatIdx<0?i:boatIdx; });
+    var half = Math.round(list.length/2);
+    if (boatIdx >= 0 && boatIdx < half) return boatIdx;   // 유람선은 2일차 오전
+    return half;
+  }
+  function stopRow(p, arrM, i, n) {
+    var dep = arrM + p.min;
+    return '<div class="tl-stop" data-id="'+p.id+'">'+
+      '<div class="tl-time">'+toHHMM(arrM)+'–'+toHHMM(dep)+'</div>'+
+      '<div class="tl-name">'+(i+1)+'. '+p.n+'</div>'+
+      '<div class="tl-sub">'+RG[p.rg].label+' · 관람 ~'+fmtDur(p.min)+
+        (p.book?' · <b style="color:var(--coral)">예약 필요</b>':'')+'</div>'+
+      '<div class="tl-ctrls">'+
+        '<button type="button" data-mv="up" aria-label="위로">▲</button>'+
+        '<button type="button" data-mv="down" aria-label="아래로">▼</button>'+
+        '<button type="button" data-mv="rm" aria-label="빼기">✕</button>'+
+      '</div></div>';
+  }
+  function dayHTML(stops, startClockM, fromPt, firstDriveM) {
+    var h="", t=startClockM, visit=0, move=0, prev=fromPt, warnFerry=false, endM;
+    stops.forEach(function (p, i) {
+      var d = i===0 ? firstDriveM : legDrive(prev, p);
+      move += d;
+      var fromName = i===0 ? (fromPt.nm || fromPt.n) : stops[i-1].n;
+      h += '<div class="tl-drive">↓ 🚗 ~'+fmtDur(d)+' · '+
+           '<a href="'+kakaoRoute(fromName, p.n)+'" target="_blank" rel="noopener" style="color:var(--kakao-d)">카카오 길찾기</a> · '+
+           '<a href="'+naver(p.n)+'" target="_blank" rel="noopener" style="color:var(--naver-d)">네이버</a></div>';
+      t += d;
+      if ((p.id==="oedo"||p.id==="haegeum") && t > 14*60+30) warnFerry = true;
+      h += stopRow(p, t, i, stops.length);
+      t += p.min; visit += p.min; prev = p;
+    });
+    endM = t;
+    return { html:h, visit:visit, move:move, endM:endM, lastName: stops.length ? stops[stops.length-1].n : (fromPt.nm||fromPt.n), warnFerry:warnFerry };
+  }
+
+  function renderPlan() {
+    var list = planPlaces();
+    elBody.innerHTML = "";
+    fabN.textContent = list.length;
+    fab.classList.toggle("on", list.length>0);
+    if (!list.length) { elEmpty.hidden=false; return; }
+    elEmpty.hidden=true;
+
+    /* start-time control */
+    var top=document.createElement("div"); top.className="tl-start";
+    top.innerHTML='울산 출발 <input type="time" id="startT" value="'+state.start+'"> <span style="color:var(--ink-3);font-weight:400">→ 거가대교 ~1시간50분</span>';
+    elBody.appendChild(top);
+    top.querySelector("#startT").addEventListener("change", function (e) { state.start=e.target.value||"10:00"; persist(); renderPlan(); });
+
+    /* rain / off warnings */
+    var outdoor=list.filter(function (p) { return !p.indoor; }).length;
+    warn(elBody, "bad", "☔ 8/29–30 비 예보(20–60mm). 담은 "+list.length+"곳 중 실외 "+outdoor+"곳 — 우비 준비, 비 강하면 “☔ 우천 대비 코스”로 교체.");
+    if (list.some(function (p) { return p.id==="yeocha"; })) warn(elBody, "", "여차–홍포는 비포장 — 비 오면 진입 금지.");
+    if (list.some(function (p) { return p.off; })) warn(elBody, "", "‘거제 밖’ 장소는 우회 시간이 큽니다(절영 약 40분, 남해 독일마을 1시간 40분+).");
+
+    var firstDrive = 110; // 울산→첫 거제 목적지 (거가대교)
+    if (state.mode === "day") {
+      var d = dayHTML(list, toMin(state.start), UL, firstDrive);
+      elBody.insertAdjacentHTML("beforeend", d.html);
+      var leaveM = d.endM, homeM = leaveM + 110;
+      elBody.insertAdjacentHTML("beforeend",
+        '<div class="tl-end">🏁 '+toHHMM(leaveM)+' 거제 출발 → 거가대교 → <b>'+toHHMM(homeM)+' 울산 도착</b></div>');
+      elBody.insertAdjacentHTML("beforeend",
+        '<div class="dtot">관람 ~'+fmtDur(d.visit)+' · 이동(섬 내) ~'+fmtDur(d.move)+' · 왕복 고속도로 ~3시간40분<br>방향: '+regionPath(list)+'</div>');
+      if (leaveM > 19*60) warn(elBody, "bad", "거제 출발이 "+toHHMM(leaveM)+" — 너무 늦습니다. 1~2곳 빼거나 관람이 긴 곳을 줄이세요.");
+      if (d.warnFerry) warn(elBody, "bad", "외도·해금강 도착이 오후 늦음 — 유람선 막차(대개 14–15시) 놓칠 수 있습니다. 앞 일정을 줄이거나 1박2일로.");
+      if (list.some(function (p) { return p.id==="oedo"||p.id==="haegeum"; }))
+        warn(elBody, "bad", "당일치기에 외도·해금강은 왕복 2.5~3시간 + 이번 주말 결항 위험 — 비추천.");
+      ctaBox([
+        ["📍 네이버 지도에 전체 코스 (앱)", naverCourseApp(UL, list.slice(), UL), "nav solid"],
+        ["네이버 지도 웹 (울산↔마지막)", naverCourseWeb(UL, list[list.length-1]), "nav sm"]
+      ]);
+    } else {
+      var sAt = state.split;
+      if (sAt === null || sAt < 1 || sAt > list.length-1) sAt = autoSplit(list);
+      sAt = Math.max(1, Math.min(list.length - 1, sAt));
+      var d1 = list.slice(0, sAt), d2 = list.slice(sAt);
+
+      elBody.insertAdjacentHTML("beforeend", '<div class="tl-div">1일차 · 8/29(토)</div>');
+      var day1 = dayHTML(d1, toMin(state.start), UL, firstDrive);
+      elBody.insertAdjacentHTML("beforeend", day1.html);
+      elBody.insertAdjacentHTML("beforeend",
+        '<div class="tl-div">🛏 '+toHHMM(day1.endM)+' 숙박 (고현/학동·장승포 모텔)'+
+        '<span class="mv"><button type="button" data-split="up" aria-label="숙박 앞당기기">– 하루</button>'+
+        '<button type="button" data-split="down" aria-label="숙박 미루기">+ 하루</button></span></div>');
+
+      var d2start=document.createElement("div"); d2start.className="tl-start";
+      d2start.innerHTML='2일차 출발 <input type="time" id="d2T" value="'+state.d2+'"> <span style="color:var(--ink-3);font-weight:400">체크아웃</span>';
+      elBody.appendChild(d2start);
+      d2start.querySelector("#d2T").addEventListener("change", function (e) { state.d2=e.target.value||"09:00"; persist(); renderPlan(); });
+
+      var d2from = d1.length ? d1[d1.length-1] : GOHYEON;
+      var day2 = dayHTML(d2, toMin(state.d2), d2from, d2.length ? legDrive(d2from, d2[0]) : 0);
+      elBody.insertAdjacentHTML("beforeend", day2.html);
+      var leave2 = day2.endM, home2 = leave2 + 140;
+      elBody.insertAdjacentHTML("beforeend",
+        '<div class="tl-end">🏁 '+toHHMM(leave2)+' 거제 출발 → 거제대교·통영 → <b>'+toHHMM(home2)+' 울산 도착</b></div>');
+      elBody.insertAdjacentHTML("beforeend",
+        '<div class="dtot">1일차 관람 ~'+fmtDur(day1.visit)+' / 2일차 ~'+fmtDur(day2.visit)+
+        ' · 왕복 고속도로 ~4시간10분<br>방향: '+regionPath(list)+'</div>');
+      if (day1.endM > 21*60) warn(elBody, "", "1일차가 "+toHHMM(day1.endM)+"에 끝납니다 — 늦으면 마지막 1곳을 2일차로 미루세요(+ 하루).");
+      if (leave2 > 17*60+30) warn(elBody, "", "복귀 출발이 "+toHHMM(leave2)+" — 저녁 정체 전에 나오려면 2일차를 줄이세요.");
+      if (day2.warnFerry) warn(elBody, "", "외도·해금강은 오전 첫 배 기준입니다. 2일차 출발을 앞당기세요.");
+      if (d2.some(function (p) { return p.id==="oedo"||p.id==="haegeum"; }))
+        warn(elBody, "bad", "외도·해금강은 이번 주말 결항 가능성 큼 — 전날 예매 후 당일 아침 선사 확인, 결항 시 정글돔·포로수용소로 대체.");
+      ctaBox([
+        ["📍 네이버: 1일차 전체 코스 (앱)", naverCourseApp(UL, d1.slice(), null), "nav solid"],
+        ["📍 네이버: 2일차 전체 코스 (앱)", naverCourseApp(d2from, d2.slice(), UL), "nav solid"],
+        ["네이버 웹 (울산↔1일차 마지막)", naverCourseWeb(UL, d1.length?d1[d1.length-1]:UL), "nav sm"]
+      ]);
+    }
+
+    /* wire controls */
+    [].forEach.call(elBody.querySelectorAll(".tl-ctrls button"), function (b) {
+      b.addEventListener("click", function () {
+        var id=b.closest(".tl-stop").dataset.id, mv=b.dataset.mv;
+        if (mv==="rm") toggle(id);
+        else moveStop(id, mv==="up"?-1:1);
+      });
+    });
+    [].forEach.call(elBody.querySelectorAll("[data-split]"), function (b) {
+      b.addEventListener("click", function () {
+        var cur = state.split; if (cur===null) cur = autoSplit(planPlaces());
+        state.split = Math.max(1, Math.min(planPlaces().length-1, cur + (b.dataset.split==="up"?-1:1)));
+        persist(); renderPlan();
+      });
+    });
+  }
+  function warn(parent, kind, text) {
+    var p=document.createElement("p"); p.className="warnl"+(kind?" "+kind:""); p.textContent=text; parent.appendChild(p);
+  }
+  function ctaBox(links) {
+    var box=document.createElement("div"); box.className="cta";
+    links.forEach(function (a) {
+      if (!a[1]) return;
+      var el=document.createElement("a");
+      el.className="btn "+(a[2]||"nav"); el.href=a[1]; el.target="_blank"; el.rel="noopener"; el.textContent=a[0];
+      box.appendChild(el);
+    });
+    elBody.appendChild(box);
+  }
+  function regionPath(list) {
+    var out=[], last=null;
+    list.forEach(function (p) { var r=RG[p.rg].label.split("·")[0]; if (r!==last) { out.push(r); last=r; } });
+    return out.join(" → ");
+  }
+
+  /* ---------- actions ---------- */
+  function insByLeg(id) {
+    var p=byId(id); if (!p) return;
+    var i=0; while (i<state.plan.length && (byId(state.plan[i]).leg||0) <= (p.leg||0)) i++;
+    state.plan.splice(i, 0, id);
+  }
+  function toggle(id) {
+    var p=byId(id); if (!p) return;
+    if (!state.off && p.off) { state.off=true; document.getElementById("offToggle").checked=true; }
+    var i=state.plan.indexOf(id);
+    if (i===-1) insByLeg(id); else state.plan.splice(i,1);
+    state.split=null; persist(); renderResults(); renderMap(); renderPlan();
+  }
+  function moveStop(id, dir) {
+    var i=state.plan.indexOf(id); if (i===-1) return;
+    var j=i+dir; if (j<0||j>=state.plan.length) return;
+    var t=state.plan[i]; state.plan[i]=state.plan[j]; state.plan[j]=t;
+    state.split=null; persist(); renderMap(); renderPlan();
+  }
+  function optimize() {
+    state.plan.sort(function (a,b) { return (byId(a).leg||0)-(byId(b).leg||0); });
+    state.split=null; persist(); renderMap(); renderPlan();
+  }
+  document.getElementById("optBtn").addEventListener("click", optimize);
+  document.getElementById("loadDefault").addEventListener("click", function () { load(DEFAULT_COURSE[state.mode]); });
+  document.getElementById("loadRain").addEventListener("click", function () { load(RAIN_COURSE[state.mode]); });
+  document.getElementById("clearPlan").addEventListener("click", function () { state.plan=[]; state.split=null; persist(); renderResults(); renderMap(); renderPlan(); });
+  function load(ids) {
+    state.plan = (ids||[]).filter(function (id) { var p=byId(id); return p && (state.off || !p.off); });
+    state.split=null; showAll=false; persist();
+    renderResults(); renderMap(); renderPlan();
+    document.getElementById("plan").scrollIntoView({ behavior:"smooth", block:"start" });
+  }
+  var offT=document.getElementById("offToggle");
+  offT.checked=state.off;
+  offT.addEventListener("change", function () {
+    state.off=offT.checked;
+    if (!state.off) state.plan=state.plan.filter(function (id) { var p=byId(id); return p && !p.off; });
+    state.split=null; persist(); renderResults(); renderMap(); renderPlan();
+  });
+  document.getElementById("modeSeg").addEventListener("click", function (e) {
+    var b=e.target.closest("button"); if (!b || b.dataset.mode===state.mode) return;
+    state.mode=b.dataset.mode; state.n=state.mode==="day"?4:8; state.split=null; showAll=false; persist(); applyMode();
+  });
+  fab.addEventListener("click", function () { document.getElementById("plan").scrollIntoView({ behavior:"smooth", block:"start" }); });
+
+  function applyMode() {
+    [].forEach.call(document.querySelectorAll("#modeSeg button"), function (b) {
+      b.setAttribute("aria-pressed", b.dataset.mode===state.mode ? "true":"false");
+    });
+    var day=state.mode==="day";
+    document.getElementById("lodgeGrid").style.display=day?"none":"";
+    document.getElementById("lodgeDaytrip").hidden=!day;
+    document.getElementById("lodgeLede").innerHTML=day
+      ? "당일치기는 숙소가 필요 없습니다. <b>이동시간</b>을 아끼려면 거가대교로 왕복하고 동부·남부 한두 클러스터에 집중하세요."
+      : "혼자 1박이면 <b>모텔이면 충분</b>합니다(1인 3–6만원, 주차 무료 대부분). 관광 동선과의 접근성만 보고 지역을 고르세요.";
+    [].forEach.call(document.querySelectorAll(".stay-only"), function (li) { li.hidden=day; });
+    elModeLine.textContent=day
+      ? "당일치기 — 울산 10:00 출발 → 12시경 도착 → 약 6시간 → 저녁 출발 → 21시경 울산. 거가대교 왕복, 3~5곳이 현실적. 비 예보이니 실내 비중을 높이세요."
+      : "1박2일 — 거가대교로 들어가 남부까지 내려가 숙박, 이튿날 서부를 거쳐 거제대교로 나오는 시계방향 루프. 두 날 다 비 예보입니다.";
+    elQsHint.innerHTML="<b>기본:</b> "+DHINT[state.mode]+"<br><b>☔ 우천:</b> "+RHINT[state.mode];
+    renderIntensity(); renderResults(); renderMap(); renderPlan();
+  }
+
+  applyMode();
+})();
+</script>

@@ -1,0 +1,93 @@
+/* =============================================================
+   responsive.css - 반응형
+   모바일(단일 열, 소스 순서) → 태블릿 → 데스크톱(3열 그리드)
+   360px 에서 가로 스크롤이 없어야 합니다.
+   ============================================================= */
+
+/* 기본은 단일 열. 소스 순서가 곧 모바일 순서:
+   여행조건 → 요약 → 우천/날씨 알림 → 지도 → DAY 일정 → 실내 → 맛집 → 카페 → 지역 날씨 */
+
+img, table, pre { max-width: 100%; }
+
+/* ---------- 소형 모바일 (~430px) ---------- */
+@media (max-width: 430px) {
+  .shell { padding: 0 var(--space-4); }
+  h1 { font-size: 20px; }
+  body { font-size: 15px; }
+  .field-grid { grid-template-columns: 1fr; }
+  .summary-grid { grid-template-columns: repeat(2, 1fr); }
+  .pc-facts { grid-template-columns: 1fr; }
+  .quick-actions .btn--ghost { flex: 1 1 100%; }
+  .map { height: 340px; }
+  .wx-grid { grid-template-columns: 1fr; }
+  .day-items { padding: var(--space-3); }
+  .panel { padding: var(--space-4); border-radius: var(--radius-card); }
+}
+
+/* ---------- 360px 특수 케이스 ---------- */
+@media (max-width: 360px) {
+  .shell { padding: 0 12px; }
+  .pc-head h4 { font-size: 14px; word-break: keep-all; }
+  .btn--primary { font-size: 15px; }
+}
+
+/* ---------- 태블릿 (600~1024px) ---------- */
+@media (min-width: 600px) and (max-width: 1024px) {
+  .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .summary-grid { grid-template-columns: repeat(5, 1fr); }
+  .day-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---------- 데스크톱 (>=1025px): 조건 고정 레일 + 결과 흐름 ----------
+   결과 영역을 하나의 컬럼(.results-col) 으로 두어 그리드 행 분배로 인한
+   빈 공간이 생기지 않도록 합니다. */
+@media (min-width: 1025px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    align-items: start;
+    gap: var(--space-5);
+  }
+  .layout > .panel { margin-bottom: 0; }
+
+  .area-cond {
+    position: sticky;
+    top: var(--space-4);
+    max-height: calc(100vh - var(--space-8));
+    overflow-y: auto;
+  }
+
+  .results-col { display: flex; flex-direction: column; gap: var(--space-5); min-width: 0; }
+  .results-col > .panel { margin-bottom: 0; }
+
+  #resultTop { display: none; }
+  .map { height: 520px; }
+  .summary-grid { grid-template-columns: repeat(5, 1fr); }
+
+  .lists-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+    align-items: start;
+  }
+}
+
+/* ---------- 넓은 데스크톱 (>=1360px) ---------- */
+@media (min-width: 1360px) {
+  .layout { grid-template-columns: 360px minmax(0, 1fr); }
+  .map { height: 560px; }
+}
+
+/* ---------- 대형 데스크톱: 과도한 확장 방지 ---------- */
+@media (min-width: 1440px) { .shell { max-width: 1360px; } }
+@media (min-width: 1920px) { .shell { max-width: 1480px; } }
+
+/* ---------- 모바일/태블릿: 세로 스택 ---------- */
+@media (max-width: 1024px) {
+  .results-col { display: flex; flex-direction: column; gap: var(--space-5); }
+  .results-col > .panel { margin-bottom: var(--space-5); }
+  .lists-grid { display: flex; flex-direction: column; gap: var(--space-5); }
+}
+@media (min-width: 600px) and (max-width: 1024px) {
+  .lists-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); align-items: start; }
+}

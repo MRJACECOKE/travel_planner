@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://donghaero.example/schemas/popularity-v2.json",
+  "title": "동해로 ver2 최근 방문 데이터",
+  "type": "object",
+  "required": ["schemaVersion", "status", "metric", "source", "period", "generatedAt", "items"],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "status": { "enum": ["ready", "configuration_required", "stale"] },
+    "metric": { "enum": ["actual_visitors", "estimated_unique_visitors"] },
+    "source": {
+      "type": "object",
+      "required": ["name", "url", "method"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" },
+        "method": { "type": "string", "minLength": 1 }
+      }
+    },
+    "period": {
+      "type": "object",
+      "required": ["start", "end"],
+      "properties": {
+        "start": { "type": ["string", "null"], "format": "date" },
+        "end": { "type": ["string", "null"], "format": "date" }
+      }
+    },
+    "generatedAt": { "type": ["string", "null"], "format": "date-time" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["placeId", "visitors"],
+        "properties": {
+          "placeId": { "type": "string", "minLength": 1 },
+          "visitors": { "type": "integer", "minimum": 0 }
+        }
+      }
+    }
+  }
+}

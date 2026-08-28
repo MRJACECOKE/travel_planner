@@ -1,0 +1,20 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/legacy", "destination": "/donghae-planner.html" },
+    { "source": "/v1", "destination": "/versions/v1/index.html" },
+    { "source": "/v2", "destination": "/versions/v2/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "geolocation=(), camera=(), microphone=()" },
+        { "key": "Content-Security-Policy", "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://openapi.map.naver.com https://oapi.map.naver.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' https://cdn.jsdelivr.net data:; connect-src 'self' https://api.open-meteo.com https://naveropenapi.apigw.ntruss.com https://*.map.naver.com https://*.pstatic.net; img-src 'self' data: https://*.pstatic.net https://*.map.naver.com https://naveropenapi.apigw.ntruss.com; frame-ancestors 'self'; base-uri 'self'; form-action 'self'" }
+      ]
+    }
+  ]
+}

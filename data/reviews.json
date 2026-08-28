@@ -1,0 +1,1630 @@
+{
+  "source": "demo",
+  "note": "실제 방문자 후기는 포함하지 않습니다. signals 는 장소 유형/주차/접근성에서 파생한 구조적 지표입니다. 실 연동 시 각 항목의 rawReviews 를 [{text,url,source,publishedAt}] 로 채우십시오.",
+  "adKeywords": [
+    "광고",
+    "협찬",
+    "체험단",
+    "원고료",
+    "제공받아",
+    "소정의",
+    "업체로부터",
+    "지원받아",
+    "무상제공",
+    "쿠폰제공"
+  ],
+  "trustBonusKeywords": [
+    "주차",
+    "대기시간",
+    "웨이팅",
+    "진입",
+    "도로",
+    "방문시간",
+    "동선",
+    "혼잡",
+    "재방문",
+    "직접"
+  ],
+  "perPlace": [
+    {
+      "placeId": "gj-jusangjeolli",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 70,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해안 명소 · 지질명소 · 야외 위주 · 주차 보통 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-eupcheon",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 항구산책 · 야외 위주 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-yangnam-drive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-munmudaewang",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "사진 포인트 · 해중릉 · 야외 위주 · 주차 보통 · 권장 체류 약 30분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-gampo-cafe",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-najeong",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 48,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-gampohang",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 회·물회 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 62,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-guryongpo-street",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 74,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 40,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 근대거리 · 부분 실내 · 주차 혼잡 · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-morri",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 40,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 향토국수 · 부분 실내 · 주차 혼잡 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-homigot",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 72,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 60,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "사진 포인트 · 해맞이 · 야외 위주 · 주차 쉬움 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-jukdo-market",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 80,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 48,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 32,
+        "sampleCount": 0
+      },
+      "summary": "시장 · 수산시장 · 부분 실내 · 주차 혼잡(실내) · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-yeongildae",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-spacewalk",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 78,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 체험조형물 · 야외 위주 · 주차 보통 · 권장 체류 약 60분 · 강풍·우천 시 운영 통제될 수 있음",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-museum",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 55,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 미술관 · 실내 위주 · 주차 쉬움 · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-cafe1703",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 63,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "ph-igari",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 70,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 해상전망대 · 야외 위주 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-jangsa",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 50,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 96,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전시관 · 안보전시관 · 실내 위주 · 주차 쉬움(실내) · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-ganggu",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 82,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 32,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 대게·해산물 · 부분 실내 · 주차 보통 · 권장 체류 약 80분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-samsa",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 해상공원 · 야외 위주 · 주차 쉬움 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-fishmuseum",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 44,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 민속전시관 · 실내 위주 · 주차 쉬움 · 권장 체류 약 55분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-bluroad",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 해안트레킹 · 야외 위주 · 주차 보통 · 권장 체류 약 120분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-windfarm",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 고지대드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 40분 · 능선 구간으로 강풍 영향 큼",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-haemaji",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 등대·해안공원 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-goraebul",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 50,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-hupo-skywalk",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 해상전망대 · 야외 위주 · 주차 보통 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-hupo-port",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 62,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 회·대게 · 부분 실내 · 주차 보통 · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-wolsongjeong",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 46,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 관동팔경·송림 · 야외 위주 · 주차 보통 · 권장 체류 약 35분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-mangyangjeong",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 관동팔경 정자 · 야외 위주 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-expo-aquarium",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "아쿠아리움 · 아쿠아리움 · 실내 위주 · 주차 쉬움 · 권장 체류 약 80분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-seongryu",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 55,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "실내 볼거리 · 석회동굴 · 실내 위주 · 주차 보통 · 권장 체류 약 60분 · 동굴 내부 계단·저조도",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-jukbyeon-rail",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 70,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 레일바이크형 · 부분 실내 · 주차 보통 · 권장 체류 약 80분 · 예약 권장, 차량형 부분 지붕",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-jukbyeon-heart",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "사진 포인트 · 항구·포토존 · 야외 위주 · 주차 보통 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-imwon",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 48,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 해안전망공원 · 야외 위주 · 주차 보통 · 권장 체류 약 50분 · 엘리베이터·고지대 노출",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-jangho",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 80,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 10,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 투명카누·스노클링 · 야외 위주 · 주차 보통 · 권장 체류 약 90분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-cablecar",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 68,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 해상케이블카 · 부분 실내 · 주차 보통 · 권장 체류 약 60분 · 강풍 시 운행 중단",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-choka",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 해안 보드워크 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-hwanseon",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 55,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "실내 볼거리 · 석회동굴 · 실내 위주 · 주차 보통 · 권장 체류 약 130분 · 매표소~동굴 급경사 도보 구간",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-jukseoru",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 46,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 국가유산·누각 · 부분 실내 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-newmillennium-drive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 62,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-isabu",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 40,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 테마공원 · 야외 위주 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-chuam",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 82,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 10,
+        "sampleCount": 0
+      },
+      "summary": "사진 포인트 · 기암·출렁다리 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-mureung",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 54,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 55,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 계곡트레킹 · 야외 위주 · 주차 보통 · 권장 체류 약 120분 · 우천 시 계곡물 불어남 주의",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-mukho",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 40,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 언덕마을 산책 · 야외 위주 · 주차 혼잡 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-dokkaebi",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 72,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 40,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 스카이워크·유리전망 · 야외 위주 · 주차 혼잡 · 권장 체류 약 50분 · 강풍 시 유리다리·집와이어 통제",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-mukho-market",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "시장 · 수산시장 · 부분 실내 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-cafe-dojaebi",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-mangsang",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 48,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 74,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 30분 · 국내 대표 해안 드라이브 구간",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-jeongdongjin",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 70,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해안 명소 · 해안명소 · 야외 위주 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-arte",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 82,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 96,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 10,
+        "sampleCount": 0
+      },
+      "summary": "전시관 · 미디어아트 · 실내 위주 · 주차 쉬움(실내) · 권장 체류 약 80분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-haslla",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 조각·설치미술 · 부분 실내 · 주차 쉬움 · 권장 체류 약 90분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-anmok",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 84,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 48,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 32,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 카페거리·해변 · 부분 실내 · 주차 혼잡(실내) · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-jungang-market",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 76,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 48,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "시장 · 전통시장 · 부분 실내 · 주차 혼잡(실내) · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-ojukheon",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 56,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 국가유산 · 부분 실내 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-chodang",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 78,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 순두부 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-chamsori",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 50,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 과학·음향박물관 · 실내 위주 · 주차 쉬움 · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-gyeongpo",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 72,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gn-sacheon-cafe",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-namae",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "사진 포인트 · 항구 포토존 · 야외 위주 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 62,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-hajodae",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 72,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 정자·등대 전망 · 야외 위주 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-surfyeong",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 74,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 서핑해변 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-market",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 54,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "시장 · 전통시장 · 부분 실내 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-osan-museum",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 42,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 선사유적 · 실내 위주 · 주차 쉬움 · 권장 체류 약 55분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-seopi",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 76,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 라운지 해변 · 부분 실내 · 주차 보통 · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-naksansa",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 70,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 해안 사찰 · 야외 위주 · 주차 보통 · 권장 체류 약 80분 · 해안 절벽 구간 강풍 주의",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-naksan-beach",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-oeongchi",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 해안 보드워크 · 야외 위주 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-beach",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 66,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 해수욕장 · 야외 위주 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-cheongcho",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 50,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 호수 산책 · 야외 위주 · 주차 보통 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-market",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 88,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 48,
+        "roadAccess": 78,
+        "congestion": "high",
+        "commercialRisk": 32,
+        "sampleCount": 0
+      },
+      "summary": "시장 · 관광시장 · 부분 실내 · 주차 혼잡(실내) · 권장 체류 약 70분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-abai",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 72,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 실향민 마을 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-cafe-yeongnang",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 62,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 호수·바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-yeonggeumjeong",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "사진 포인트 · 해안 정자 · 야외 위주 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-lighthouse",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 56,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 등대 전망대 · 야외 위주 · 주차 보통 · 권장 체류 약 40분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-seorak-cablecar",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 78,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 55,
+        "congestion": "high",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 산악 케이블카 · 부분 실내 · 주차 보통 · 권장 체류 약 120분 · 강풍·결빙 시 운행 중단, 국립공원 구간",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-cheongganjeong",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 48,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 관동팔경 정자 · 부분 실내 · 주차 보통 · 권장 체류 약 35분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-ayajin",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "해변 · 기암 해변 · 야외 위주 · 주차 보통 · 권장 체류 약 45분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 54,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-songjiho",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 해변·호수 산책 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-wanggol",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 56,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 55,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "야외 관광 · 전통 한옥마을 · 야외 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-hwajinpo-lake",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "산책 · 석호 산책 · 야외 위주 · 주차 보통 · 권장 체류 약 50분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-hwajinpo-museum",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 50,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전시관 · 역사안보 전시 · 실내 위주 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-geojin",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 회·명태 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-dmz-museum",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 46,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 분단·평화 전시 · 실내 위주 · 주차 쉬움 · 권장 체류 약 70분 · 통일전망대 출입신고소 인근",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-unification",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 60,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "전망대 · 안보 전망대 · 부분 실내 · 주차 보통 · 권장 체류 약 60분 · 출입신고서 작성·신분증 필요, 지정 차량 이동 구간",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gj-girimsa",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 42,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 55,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "박물관 · 사찰 성보박물관 · 실내 위주 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yd-cafe-haemaji",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 54,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "uj-cafe-jukbyeon",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-food-jangho",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 회·물회 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sc-cafe-samcheok",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 56,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 56,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "dh-food-eodal",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 58,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 회·생선구이 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-food-namae",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 56,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 물회·회 · 부분 실내 · 주차 보통 · 권장 체류 약 55분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "yy-cafe-hajodae",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 64,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 88,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 쉬움 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-coastdrive",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 52,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 82,
+        "congestion": "low",
+        "commercialRisk": 0,
+        "sampleCount": 0
+      },
+      "summary": "드라이브 · 해안드라이브 · 야외 위주 · 주차 보통 · 권장 체류 약 25분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "sk-food-abai",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 74,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 40,
+        "roadAccess": 78,
+        "congestion": "mid",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "맛집 · 향토음식 · 부분 실내 · 주차 혼잡 · 권장 체류 약 55분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    },
+    {
+      "placeId": "gs-cafe-ayajin",
+      "signals": {
+        "status": "DEMO",
+        "recentInterest": 54,
+        "recentInterestLabel": "DEMO 관심도(검색·저장 등 대체지표 가정, 실측 방문자 수 아님)",
+        "parkingClarity": 66,
+        "roadAccess": 78,
+        "congestion": "low",
+        "commercialRisk": 22,
+        "sampleCount": 0
+      },
+      "summary": "카페 · 바다조망 · 부분 실내 · 주차 보통 · 권장 체류 약 60분",
+      "reviewNote": "실제 방문자 후기 데이터 연결 필요 (현재 DEMO)",
+      "rawReviews": []
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="description" content="경상북도 동해안부터 강원도 고성까지, 차량 이동 방향·주차·우회거리·운전 피로·기상상황·영업시간을 종합해 자동으로 일정화하는 동해안 드라이브 여행 플래너.">
+<title>동해안 드라이브 여행 플래너</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ctext y='13' font-size='13'%3E%F0%9F%9A%97%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="shell">
+    <div class="site-header__top">
+      <h1>동해안 드라이브 여행 플래너</h1>
+      <p class="subtitle">최신 관광·후기 데이터 · 다중 날씨 분석 · 차량 동선 최적화 · 네이버 지도</p>
+    </div>
+    <div class="site-header__status">
+      <span id="dataStatus" class="data-status" aria-live="polite"></span>
+      <span id="scenarioBadge" class="scenario-badge" hidden></span>
+    </div>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="layout">
+
+    <!-- 1. 여행 조건 -->
+    <section id="conditions" class="panel area-cond" aria-labelledby="condTitle">
+      <h2 id="condTitle">여행 조건</h2>
+      <form id="planForm" class="form" novalidate>
+        <div class="field-grid">
+          <label>출발지
+            <select id="origin" required></select>
+          </label>
+          <label>여행 시작지역
+            <select id="startRegion" required></select>
+          </label>
+          <label>최종 여행지역
+            <select id="endRegion" required></select>
+          </label>
+          <label>출발 날짜
+            <input type="date" id="startDate" required>
+          </label>
+          <label>여행 일수
+            <input type="number" id="days" min="1" max="7" step="1" value="3" required>
+          </label>
+          <label>출발 시각
+            <input type="time" id="startTime" value="08:30" required>
+          </label>
+          <label>마지막 날 종료 희망 시각
+            <input type="time" id="endTime" value="18:00" required>
+          </label>
+        </div>
+
+        <details class="opt-block">
+          <summary>선택 입력 (여행 취향)</summary>
+          <div class="field-grid">
+            <label>드라이브 선호도 <input type="range" id="prefDrive" min="0" max="1" step="0.1" value="0.6"></label>
+            <label>해안도로 선호도 <input type="range" id="prefCoastal" min="0" max="1" step="0.1" value="0.6"></label>
+            <label>여행 강도
+              <select id="prefIntensity">
+                <option value="relaxed">여유</option>
+                <option value="balanced" selected>보통</option>
+                <option value="packed">알차게</option>
+              </select>
+            </label>
+            <label>음식 관심도 <input type="range" id="prefFood" min="0" max="1" step="0.1" value="0.6"></label>
+            <label>카페 관심도 <input type="range" id="prefCafe" min="0" max="1" step="0.1" value="0.5"></label>
+            <label>사진 관심도 <input type="range" id="prefPhoto" min="0" max="1" step="0.1" value="0.5"></label>
+            <label>자연 관심도 <input type="range" id="prefNature" min="0" max="1" step="0.1" value="0.6"></label>
+            <label>실내 관광 관심도 <input type="range" id="prefIndoor" min="0" max="1" step="0.1" value="0.5"></label>
+            <label>시장 관심도 <input type="range" id="prefMarket" min="0" max="1" step="0.1" value="0.4"></label>
+            <label>하루 최대 운전시간(시간) <input type="number" id="prefMaxDrive" min="2" max="10" step="0.5" value="5"></label>
+            <label>하루 최대 방문 장소 <input type="number" id="prefMaxPlaces" min="3" max="9" step="1" value="6"></label>
+            <label>동행 형태
+              <select id="prefCompanions">
+                <option>혼자</option>
+                <option selected>커플</option>
+                <option>가족</option>
+                <option>친구</option>
+                <option>부모님 동반</option>
+              </select>
+            </label>
+          </div>
+        </details>
+
+        <div class="weather-controls">
+          <label class="switch">
+            <input type="checkbox" id="autoWeather" checked>
+            <span>자동 날씨 최적화 ON</span>
+          </label>
+          <div class="quick-actions" role="group" aria-label="빠른 재구성">
+            <button type="button" class="btn btn--ghost" data-quick="rain">비 오는 날 코스로 변경</button>
+            <button type="button" class="btn btn--ghost" data-quick="drive">드라이브 늘리기</button>
+            <button type="button" class="btn btn--ghost" data-quick="indoor">실내 볼거리 늘리기</button>
+            <button type="button" class="btn btn--ghost" data-quick="less-outdoor">야외 일정 줄이기</button>
+            <button type="button" class="btn btn--ghost" id="resetScenario">실시간 날씨로 되돌리기</button>
+          </div>
+        </div>
+
+        <button type="submit" id="buildBtn" class="btn btn--primary">동해안 코스 만들기</button>
+        <p id="runStatus" class="run-status" role="status" aria-live="polite" hidden></p>
+      </form>
+      <p class="range-note">관광 추천 범위: 경주 → 포항 → 영덕 → 울진 → 삼척 → 동해 → 강릉 → 양양 → 속초 → 고성. 부산·울산은 출발지로만 사용합니다.</p>
+    </section>
+
+    <div id="resultTop"></div>
+
+    <div class="results-col">
+      <!-- 2. 여행 요약 -->
+      <section id="summaryWrap" class="panel" aria-labelledby="sumTitle">
+        <h2 id="sumTitle" class="sr-only">여행 요약</h2>
+        <div id="summary" class="summary"><p class="hint">여행 조건을 입력하고 "동해안 코스 만들기"를 누르면 결과가 표시됩니다.</p></div>
+      </section>
+
+      <!-- 3. 우천 / 날씨 알림 -->
+      <section id="alertsWrap" class="panel" aria-labelledby="alertTitle">
+        <h2 id="alertTitle">우천·날씨 알림</h2>
+        <div id="rainNotice" class="rain-notice"></div>
+      </section>
+
+      <!-- 4. 네이버 지도 -->
+      <section id="mapWrap" class="panel" aria-labelledby="mapTitle">
+        <div class="map-head">
+          <h2 id="mapTitle">코스 지도</h2>
+          <span id="mapMode" class="map-mode">지도 대기 중</span>
+        </div>
+        <div id="dayFilter" class="day-filter" role="group" aria-label="DAY 필터"></div>
+        <div id="map" class="map" role="region" aria-label="네이버 지도 또는 코스 목록"></div>
+        <details id="overviewWrap" class="overview" open>
+          <summary>전체 코스 지도 이미지</summary>
+          <p class="overview__note">전체 코스를 한 장에 나타낸 개요 지도입니다. 좌표를 축척한 위치에 방문 순서를 표시하며, DAY별 색으로 이동선을 잇습니다.</p>
+          <div id="overviewMap" class="overview__canvas" role="img" aria-label="전체 코스 개요 지도"></div>
+          <p id="overviewLinks" class="overview__links"></p>
+        </details>
+      </section>
+
+      <!-- 5. DAY 일정 -->
+      <section id="scheduleWrap" class="panel" aria-labelledby="schedTitle">
+        <h2 id="schedTitle">DAY 일정</h2>
+        <div id="scheduleDays" class="schedule-days"></div>
+      </section>
+
+      <!-- 6. 숙박 (당일치기가 아닐 때) -->
+      <section id="lodgingWrap" class="panel" aria-labelledby="lodgingTitle" hidden>
+        <h2 id="lodgingTitle">숙박 지역 · 모텔 중심 추천</h2>
+        <div id="lodgingList"></div>
+      </section>
+
+      <!-- 7. 실내 볼거리 · 맛집 · 카페 -->
+      <section id="listsWrap" class="panel" aria-labelledby="listsTitle">
+        <h2 id="listsTitle" class="sr-only">실내 볼거리 · 맛집 · 카페</h2>
+        <div class="lists-grid">
+          <div id="indoorList"></div>
+          <div id="foodList"></div>
+          <div id="cafeList"></div>
+        </div>
+      </section>
+
+      <!-- 8. 오늘·내일 지역별 날씨 -->
+      <section id="weatherWrap" class="panel" aria-labelledby="wxTitle">
+        <h2 id="wxTitle">오늘·내일 지역별 날씨</h2>
+        <div id="weatherToday"></div>
+        <div id="weatherTomorrow"></div>
+      </section>
+
+      <!-- 9. 우천 전략 -->
+      <section id="strategyWrap" class="panel" aria-labelledby="stratTitle">
+        <h2 id="stratTitle" class="sr-only">우천 전략</h2>
+        <div id="strategyPanel"></div>
+        <div id="regionWeather"></div>
+      </section>
+    </div>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="shell">
+    <p>이동시간과 우회시간은 좌표·도로 특성 기반 예상값이며 실시간 교통정보가 아닙니다. 출발 직전 네이버 지도에서 최신 경로를 확인하십시오.</p>
+    <p>관광 기본정보는 대한민국 구석구석(visitkorea.or.kr)·한국관광공사 TourAPI 연동을 전제로 하며, 현재 내장 데이터는 DEMO 입니다. 실제 방문자 후기는 별도 연결이 필요합니다.</p>
+    <p>운영시간·입장 가능 여부·도로 통제 상황은 방문 전 해당 기관에서 확인하십시오.</p>
+  </div>
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/reviews.js"></script>
+<script src="js/weather.js"></script>
+<script src="js/weatherStrategy.js"></script>
+<script src="js/routeOptimizer.js"></script>
+<script src="js/recommendation.js"></script>
+<script src="js/schedule.js"></script>
+<script src="js/map.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

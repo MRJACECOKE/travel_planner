@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "description": "공식 API 응답과 대조하여 확인된 항목만 verified를 true로 변경합니다.",
+  "mappings": [
+    {
+      "placeId": "daewangam",
+      "sido": "울산광역시",
+      "gungu": "동구",
+      "resNm": "대왕암공원",
+      "verified": false
+    },
+    {
+      "placeId": "seongryu",
+      "sido": "경상북도",
+      "gungu": "울진군",
+      "resNm": "성류굴",
+      "verified": false
+    },
+    {
+      "placeId": "hwanseon",
+      "sido": "강원특별자치도",
+      "gungu": "삼척시",
+      "resNm": "환선굴",
+      "verified": false
+    }
+  ]
+}
