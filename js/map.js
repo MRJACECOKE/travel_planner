@@ -127,6 +127,35 @@
     var bounds = new maps.LatLngBounds();
     var pathByDay = {};
 
+    // 출발지 마커 + 출발지 -> 첫 목적지 경로 (전체 보기 또는 DAY1 에서만)
+    var showDeparture = trip.departure && (!opts.activeDay || opts.activeDay === "all" || opts.activeDay === 1);
+    if (showDeparture) {
+      var dep = trip.departure;
+      var oPos = new maps.LatLng(dep.originLat, dep.originLng);
+      var tPos = new maps.LatLng(dep.toLat, dep.toLng);
+      bounds.extend(oPos);
+      var oMarker = new maps.Marker({
+        position: oPos, map: state.map, title: "출발 · " + dep.originName,
+        icon: {
+          content: '<div style="transform:translate(-50%,-100%);background:#1c2530;color:#fff;border-radius:14px;padding:3px 9px;font:700 12px/1.2 \'Malgun Gothic\',sans-serif;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.35)">출발 · ' + escapeHtml(dep.originName) + '</div>',
+          anchor: new maps.Point(0, 0)
+        }
+      });
+      var oInfo = new maps.InfoWindow({
+        content: '<div style="padding:10px 12px;max-width:240px;font:14px/1.5 \'Malgun Gothic\',sans-serif">' +
+          '<strong>출발 · ' + escapeHtml(dep.originName) + '</strong><br>' +
+          dep.startTime + ' 출발 → ' + escapeHtml(dep.toName) + ' ' + dep.arriveTime + ' 도착<br>' +
+          '약 ' + dep.km + 'km · ' + dep.min + '분 (예상)<br>' +
+          '<a href="' + dep.naverDirections + '" target="_blank" rel="noopener">네이버 길찾기로 열기</a></div>'
+      });
+      maps.Event.addListener(oMarker, "click", function () { oInfo.open(state.map, oMarker); });
+      var depLine = new maps.Polyline({
+        map: state.map, path: [oPos, tPos], strokeColor: "#1c2530",
+        strokeWeight: 3, strokeOpacity: 0.6, strokeStyle: "shortdash"
+      });
+      state.overlays.push(oMarker, depLine);
+    }
+
     items.forEach(function (row) {
       var it = row.it;
       var pos = new maps.LatLng(it.lat, it.lng);
@@ -221,8 +250,10 @@
     if (!rows.length) { el.innerHTML = ""; return; }
 
     var W = 720, H = 940, padX = 96, padY = 44;
+    var dep = trip.departure;
     var lats = rows.map(function (r) { return r.it.lat; });
     var lngs = rows.map(function (r) { return r.it.lng; });
+    if (dep) { lats.push(dep.originLat); lngs.push(dep.originLng); }
     var minLat = Math.min.apply(null, lats), maxLat = Math.max.apply(null, lats);
     var minLng = Math.min.apply(null, lngs), maxLng = Math.max.apply(null, lngs);
     var spanLat = (maxLat - minLat) || 0.01, spanLng = (maxLng - minLng) || 0.01;
@@ -258,6 +289,16 @@
       }
     });
 
+    // 출발지 -> 첫 목적지 경로
+    if (dep) {
+      var ox = px(dep.originLng), oy = py(dep.originLat);
+      var fx = px(dep.toLng), fy = py(dep.toLat);
+      svg.push('<line x1="' + ox.toFixed(1) + '" y1="' + oy.toFixed(1) + '" x2="' + fx.toFixed(1) + '" y2="' + fy.toFixed(1) + '" stroke="#1c2530" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.7"/>');
+      svg.push('<circle cx="' + ox.toFixed(1) + '" cy="' + oy.toFixed(1) + '" r="9" fill="#1c2530" stroke="#fff" stroke-width="1.5"/>');
+      svg.push('<text x="' + ox.toFixed(1) + '" y="' + (oy + 3).toFixed(1) + '" text-anchor="middle" font-size="8.5" fill="#fff" font-weight="700">출발</text>');
+      svg.push('<text x="' + (ox + 12).toFixed(1) + '" y="' + (oy + 3).toFixed(1) + '" font-size="10.5" fill="#1c2530" font-weight="700">' + escapeHtml(dep.originName) + ' 출발</text>');
+    }
+
     // 마커
     rows.forEach(function (r) {
       var x = px(r.it.lng), y = py(r.it.lat);
@@ -285,10 +326,11 @@
       var endRegion = trip.days[trip.days.length - 1].regions.slice(-1)[0];
       var naverAll = "https://map.naver.com/p/search/" + encodeURIComponent(startRegion + " " + endRegion + " 동해안");
       var svgData = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(el.querySelector("svg").outerHTML);
+      var dir = trip.departure && trip.departure.naverDirections;
       linksEl.innerHTML =
-        '<a href="' + naverAll + '" target="_blank" rel="noopener">네이버 지도에서 전체 코스 열기</a>' +
-        ' · <a href="' + svgData + '" download="donghae-course-map.svg">개요 지도 이미지 저장(SVG)</a>' +
-        (C.NAVER_MAP_CLIENT_ID ? ' · 위 지도에서 전체 코스가 자동 축척으로 표시됩니다.' : ' · 네이버 지도 키가 없어 상단은 목록으로 표시됩니다.');
+        (dir ? '<a href="' + dir + '" target="_blank" rel="noopener">' + escapeHtml(trip.departure.originName) + ' 출발 전체 길찾기(네이버)</a> · ' : '') +
+        '<a href="' + naverAll + '" target="_blank" rel="noopener">네이버 지도에서 코스 검색</a>' +
+        ' · <a href="' + svgData + '" download="donghae-course-map.svg">개요 지도 이미지 저장(SVG)</a>';
     }
   }
 

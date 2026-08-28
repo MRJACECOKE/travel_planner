@@ -6,6 +6,7 @@
 
   var C = global.CONFIG;
   var STORE_KEY = "donghae-drive:v1";
+  var ROUTES_KEY = "donghae-drive:routes:v1";
 
   var appState = {
     trip: null,
@@ -13,7 +14,8 @@
     activeDay: "all",
     forcedScenario: getParam("weather") || null, // clear|light-rain|rain|heavy-rain|disagree
     autoWeather: true,
-    prefs: {}
+    prefs: {},
+    lodgingOverrides: {} // { night(number): regionName } - 경로와 무관한 숙박 희망 지역
   };
 
   function getParam(k) {
@@ -55,7 +57,11 @@
   }
 
   function saveForm(input) {
-    try { localStorage.setItem(STORE_KEY, JSON.stringify({ input: stripPrefs(input), ts: Date.now() })); } catch (e) {}
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        input: stripPrefs(input), lodgingOverrides: appState.lodgingOverrides, ts: Date.now()
+      }));
+    } catch (e) {}
   }
   function stripPrefs(input) {
     var c = Object.assign({}, input);
@@ -66,6 +72,7 @@
     var raw;
     try { raw = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) { raw = null; }
     var i = raw && raw.input;
+    if (raw && raw.lodgingOverrides) appState.lodgingOverrides = raw.lodgingOverrides;
     var today = new Date(); today.setDate(today.getDate() + 1);
     var defDate = today.toISOString().slice(0, 10);
     setVal("origin", i && i.originId || "ulsan");
@@ -110,6 +117,7 @@
   /* ---------------- 메인 실행 ---------------- */
   function run() {
     var input = readForm();
+    appState.lastInput = input;
     var errs = global.Schedule.validateInput(input);
     if (errs.length) { global.UI.toast(errs[0]); return; }
     saveForm(input);
@@ -167,7 +175,8 @@
     global.UI.renderStrategyPanel(trip);
     global.UI.renderSummary(trip);
     global.UI.renderCategoryLists(trip);
-    global.UI.renderLodging(trip);
+    global.UI.renderLodging(trip, appState.lodgingOverrides, onLodgingChange);
+    renderRouteStorePanel();
     var resultWrap = $("result");
     if (resultWrap) resultWrap.hidden = false;
     renderFilterAndSchedule();
@@ -233,6 +242,155 @@
   }
   function clamp(n) { return Math.max(0, Math.min(1, n)); }
 
+  /* ---------------- 숙박 희망 지역 (경로와 무관) ---------------- */
+  function onLodgingChange(night, region) {
+    if (region) appState.lodgingOverrides[night] = region;
+    else delete appState.lodgingOverrides[night];
+    if (appState.trip) {
+      global.UI.renderLodging(appState.trip, appState.lodgingOverrides, onLodgingChange);
+      global.UI.toast(night + "박째 숙박 희망 지역을 " + region + "(으)로 변경했습니다.");
+    }
+    if (appState.lastInput) saveForm(appState.lastInput);
+  }
+
+  /* ---------------- 경로 저장/불러오기 (로컬 전용) ---------------- */
+  function listRoutes() {
+    try {
+      var o = JSON.parse(localStorage.getItem(ROUTES_KEY) || "{}");
+      return Object.keys(o).map(function (k) { return o[k]; })
+        .sort(function (a, b) { return b.savedAt - a.savedAt; });
+    } catch (e) { return []; }
+  }
+  function writeRoutes(map) {
+    try { localStorage.setItem(ROUTES_KEY, JSON.stringify(map)); return true; }
+    catch (e) { global.UI.toast("이 브라우저에 저장할 수 없습니다(용량 또는 시크릿 모드)."); return false; }
+  }
+  function currentPayload() {
+    var input = appState.lastInput || readForm();
+    return {
+      v: 1,
+      input: stripPrefs(input),
+      lodgingOverrides: appState.lodgingOverrides,
+      forcedScenario: appState.forcedScenario || null,
+      autoWeather: appState.autoWeather
+    };
+  }
+  function routeSummaryText() {
+    var t = appState.trip;
+    if (!t) return "";
+    return (t.origin ? t.origin.name + " 출발 · " : "") + t.summary.title + " · " + t.summary.period;
+  }
+  function saveRoute(name) {
+    if (!appState.trip) { global.UI.toast("먼저 코스를 만들어 주십시오."); return; }
+    name = (name || "").trim() || (routeSummaryText() || ("경로 " + new Date().toLocaleDateString("ko-KR")));
+    var map;
+    try { map = JSON.parse(localStorage.getItem(ROUTES_KEY) || "{}"); } catch (e) { map = {}; }
+    var id = "r" + Date.now().toString(36);
+    map[id] = { id: id, name: name, savedAt: Date.now(), summary: routeSummaryText(), payload: currentPayload() };
+    if (writeRoutes(map)) { global.UI.toast('"' + name + '" 저장 완료'); renderRouteStorePanel(); }
+  }
+  function deleteRoute(id) {
+    var map;
+    try { map = JSON.parse(localStorage.getItem(ROUTES_KEY) || "{}"); } catch (e) { map = {}; }
+    delete map[id];
+    if (writeRoutes(map)) { global.UI.toast("삭제했습니다."); renderRouteStorePanel(); }
+  }
+  function applyPayload(p) {
+    if (!p || !p.input) return false;
+    var i = p.input;
+    setVal("origin", i.originId); setVal("startRegion", i.startRegion); setVal("endRegion", i.endRegion);
+    setVal("startDate", i.startDate); setVal("days", i.days);
+    setVal("startTime", i.startTime); setVal("endTime", i.endTime);
+    if (i.prefs) {
+      var pr = i.prefs;
+      setVal("prefDrive", pr.drivePref); setVal("prefIntensity", pr.intensity);
+      setVal("prefFood", pr.foodInterest); setVal("prefCafe", pr.cafeInterest);
+      setVal("prefPhoto", pr.photoInterest); setVal("prefNature", pr.natureInterest);
+      setVal("prefIndoor", pr.indoorInterest); setVal("prefMarket", pr.marketInterest);
+      setVal("prefCoastal", pr.coastalRoadPref); setVal("prefMaxDrive", pr.maxDriveHours);
+      setVal("prefMaxPlaces", pr.maxPlacesPerDay); setVal("prefCompanions", pr.companions);
+    }
+    appState.prefs = { __overrides: {} };
+    appState.lodgingOverrides = p.lodgingOverrides || {};
+    appState.forcedScenario = p.forcedScenario || null;
+    appState.autoWeather = p.autoWeather !== false;
+    var auto = $("autoWeather"); if (auto) auto.checked = appState.autoWeather;
+    return true;
+  }
+  function loadRoute(id) {
+    var map;
+    try { map = JSON.parse(localStorage.getItem(ROUTES_KEY) || "{}"); } catch (e) { map = {}; }
+    var r = map[id];
+    if (!r) { global.UI.toast("저장된 경로를 찾을 수 없습니다."); return; }
+    if (applyPayload(r.payload)) { global.UI.toast('"' + r.name + '" 불러오는 중...'); run(); }
+  }
+  function exportRoute() {
+    if (!appState.trip) { global.UI.toast("먼저 코스를 만들어 주십시오."); return; }
+    var data = { kind: "donghae-drive-route", exportedAt: new Date().toISOString(), summary: routeSummaryText(), payload: currentPayload() };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "donghae-route-" + (routeSummaryText().replace(/[^가-힣\w]+/g, "-").slice(0, 40) || "route") + ".json";
+    document.body.appendChild(a); a.click();
+    setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
+    global.UI.toast("경로 파일을 내려받았습니다.");
+  }
+  function importRoute(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        var payload = data.payload || data;
+        if (applyPayload(payload)) { global.UI.toast("파일에서 경로를 불러옵니다."); run(); }
+        else global.UI.toast("경로 파일 형식이 올바르지 않습니다.");
+      } catch (e) { global.UI.toast("파일을 읽을 수 없습니다."); }
+    };
+    reader.readAsText(file);
+  }
+  function encodePayload(p) {
+    try { return encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify(p))))); }
+    catch (e) { return ""; }
+  }
+  function decodePayload(s) {
+    try { return JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(s))))); }
+    catch (e) { return null; }
+  }
+  function shareLink() {
+    if (!appState.trip) { global.UI.toast("먼저 코스를 만들어 주십시오."); return; }
+    var enc = encodePayload(currentPayload());
+    if (!enc) { global.UI.toast("링크를 만들 수 없습니다."); return; }
+    var url = location.origin + location.pathname + "#r=" + enc;
+    if (url.length > 6000) { global.UI.toast("경로가 너무 커서 링크로 만들 수 없습니다. 파일 내보내기를 사용하십시오."); return; }
+    function done() { global.UI.toast("공유 링크를 클립보드에 복사했습니다."); }
+    if (global.navigator && navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done, function () { promptCopy(url); });
+    } else { promptCopy(url); }
+  }
+  function promptCopy(url) {
+    try { global.prompt("아래 링크를 복사하십시오 (다른 기기에서 열면 이 경로가 불러와집니다):", url); }
+    catch (e) { global.UI.toast("복사에 실패했습니다."); }
+  }
+  function renderRouteStorePanel() {
+    var wrap = $("routeStoreWrap");
+    if (wrap) wrap.hidden = false;
+    global.UI.renderRouteStore(listRoutes(), {
+      onSave: saveRoute, onLoad: loadRoute, onDelete: deleteRoute,
+      onExport: exportRoute, onImport: importRoute, onShare: shareLink
+    });
+  }
+  function checkHashRoute() {
+    var m = /[#&]r=([^&]+)/.exec(location.hash || "");
+    if (!m) return;
+    var p = decodePayload(m[1]);
+    // 해시 제거 (뒤로가기 시 재실행 방지)
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    if (p && applyPayload(p)) {
+      global.UI.toast("공유 링크의 경로를 불러옵니다.");
+      run();
+    }
+  }
+
   /* ---------------- 초기화 ---------------- */
   function fillSelects() {
     var origin = $("origin");
@@ -273,8 +431,14 @@
     fillSelects();
     restoreForm();
     bind();
-    DATA.tryLoadExternal().then(function () {});
+    renderRouteStorePanel();
     updateScenarioBadge();
+    DATA.tryLoadExternal().then(function (loaded) {
+      if (loaded && $("dataStatus")) {
+        global.UI.toast("관광 실데이터(TourAPI)를 불러왔습니다. 총 " + DATA.PLACES.length + "곳.");
+      }
+      checkHashRoute();
+    });
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

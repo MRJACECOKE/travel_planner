@@ -309,30 +309,39 @@
     /* 데이터 상태: 내장 데이터만 있으면 DEMO, TourAPI 병합 시 PARTIAL/LIVE 로 갱신 */
     status: "DEMO",
 
-    /* TourAPI 등 외부 관광 데이터를 병합하는 어댑터 자리. 키가 없으면 아무 것도 하지 않습니다. */
-    mergeVisitKoreaData: function (records) {
+    liveCount: 0,
+
+    /* TourAPI 등 외부 관광 데이터를 병합하는 어댑터.
+       기본은 병합(내장 큐레이션 장소 + 실데이터). opts.replace 로 완전 교체도 가능. */
+    mergeVisitKoreaData: function (records, opts) {
       if (!records || !records.length) return { merged: 0 };
+      opts = opts || {};
+      if (opts.replace) { PLACES.length = 0; DATA.liveCount = 0; }
       var merged = 0;
       records.forEach(function (r) {
         var ex = DATA.place(r.id);
         if (ex) { for (var k in r) if (r.hasOwnProperty(k) && k !== "id") ex[k] = r[k]; ex.demo = false; merged++; }
         else { r.demo = false; PLACES.push(P(r)); merged++; }
       });
-      DATA.status = merged >= PLACES.length ? "LIVE" : "PARTIAL";
-      return { merged: merged };
+      PLACES.forEach(function (p) { p.leg = p.corridor; });
+      DATA.liveCount += merged;
+      // 실데이터 비중이 절반을 넘으면 LIVE, 일부만 있으면 PARTIAL
+      DATA.status = DATA.liveCount >= PLACES.length * 0.5 ? "LIVE" : "PARTIAL";
+      return { merged: merged, total: PLACES.length };
     }
   };
 
-  /* 선택적 외부 JSON override: http 로 열렸을 때만 시도. 실패해도 무시. */
+  /* 선택적 외부 JSON override: http 로 열렸을 때만 시도. 실패해도 무시.
+     data/places.json 의 "source" 가 "live" 면(수집 스크립트 결과) 내장 큐레이션 장소에 병합합니다.
+     "replace": true 가 함께 있으면 완전 교체합니다. */
   DATA.tryLoadExternal = function () {
     if (location.protocol === "file:") return Promise.resolve(false);
     return fetch("data/places.json").then(function (r) {
       if (!r.ok) throw new Error("no file");
       return r.json();
     }).then(function (json) {
-      // source 가 'live' 인 실데이터일 때만 병합. DEMO 내보내기 파일은 병합하지 않습니다.
       if (json && json.source === "live" && json.places && json.places.length) {
-        DATA.mergeVisitKoreaData(json.places);
+        DATA.mergeVisitKoreaData(json.places, { replace: json.replace === true });
         return true;
       }
       return false;

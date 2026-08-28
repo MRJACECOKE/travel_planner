@@ -95,17 +95,24 @@ section("당일치기(1일) 처리");
   ok("숙박 없음", t.lodging.length === 0);
 })();
 
-section("data/*.json 내보내기 파일");
+section("data/*.json 파일");
 ["data/places.json", "data/reviews.json", "data/indoor-attractions.json"].forEach(f => {
   try {
     const j = JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));
-    ok(f + " 유효 JSON · source=demo", j.source === "demo");
+    ok(f + " 유효 JSON · source=demo|live", j.source === "demo" || j.source === "live");
   } catch (e) { ok(f + " 유효 JSON", false, e.message); }
 });
 try {
   const pj = JSON.parse(fs.readFileSync(path.join(ROOT, "data/places.json"), "utf8"));
-  ok("places.json 개수 == 내장 장소 수", pj.places.length === DATA.PLACES.length, pj.places.length + " vs " + DATA.PLACES.length);
-} catch (e) { ok("places.json 개수 비교", false, e.message); }
+  if (pj.source === "demo") {
+    ok("places.json(demo) 개수 == 내장 장소 수", pj.places.length === DATA.PLACES.length, pj.places.length + " vs " + DATA.PLACES.length);
+  } else {
+    ok("places.json(live) 장소 존재 + 필수 필드", pj.places.length > 0 &&
+      pj.places.every(p => p.id && p.name && p.region && typeof p.lat === "number" && typeof p.lng === "number" && p.category),
+      pj.places.length + "곳");
+    ok("places.json(live) 모든 region 이 추천 범위", pj.places.every(p => CONFIG.regionIndex(p.region) >= 0));
+  }
+} catch (e) { ok("places.json 검사", false, e.message); }
 
 /* ---------- 날씨 엔진 ---------- */
 section("다중 날씨 / 예보 일치도");
@@ -176,7 +183,11 @@ chain
     })), trip.days.flatMap(d => d.items.filter(it => !it.open && it.category !== "DRIVE" && it.openingHours !== "상시").map(it => it.name + "@" + it.arrive)).join(", "));
     ok("추가 우회시간 값 존재", trip.days.every(d => d.items.every(it => typeof it.detourMin === "number")));
     ok("당일치기 아님 표시", trip.dayTrip === false);
+    ok("출발지→첫목적지 경로(departure) 존재", !!trip.departure && trip.departure.originName === "울산" &&
+      trip.departure.min > 0 && trip.departure.km > 0, JSON.stringify(trip.departure && { o: trip.departure.originName, m: trip.departure.min }));
+    ok("네이버 길찾기 딥링크 형식", !!trip.departure && /^https:\/\/map\.naver\.com\/p\/directions\//.test(trip.departure.naverDirections));
     ok("숙박 밤 수 = 여행일수 - 1", trip.lodging.length === trip.days.length - 1, trip.lodging.length + " vs " + (trip.days.length - 1));
+    ok("숙박에 autoRegion 기록", trip.lodging.every(lo => CONFIG.regionIndex(lo.autoRegion) >= 0));
     ok("각 숙박에 지역과 모텔 추천 존재", trip.lodging.every(lo =>
       CONFIG.regionIndex(lo.region) >= 0 && lo.options.length >= 1 && lo.lodgingType.indexOf("모텔") >= 0 &&
       lo.options.every(o => /map\.naver\.com/.test(o.naverUrl) && /모텔/.test(decodeURIComponent(o.naverUrl)))));

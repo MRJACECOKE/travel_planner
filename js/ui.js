@@ -203,10 +203,19 @@
       '</article>';
   }
 
-  function dayCard(d, dir) {
+  function dayCard(d, dir, departure) {
     var wxLine = d.weather
       ? d.weatherLabel + " · 강수확률 " + d.weather.pop + "% · 풍속 " + d.weather.windMs + "m/s"
       : "날씨 정보 없음";
+    var depHtml = "";
+    if (d.dayIndex === 1 && departure) {
+      depHtml = '<div class="day-departure">' +
+        '<strong>' + esc(departure.originName) + ' 출발</strong> ' + departure.startTime +
+        ' → ' + esc(departure.toName) + ' ' + departure.arriveTime + ' 도착' +
+        ' · 약 ' + departure.km + 'km · ' + departure.min + '분 · ' + roadLabel(departure.roadType) + ' (예상)' +
+        (departure.naverDirections ? ' · <a href="' + departure.naverDirections + '" target="_blank" rel="noopener">네이버 길찾기</a>' : '') +
+        '</div>';
+    }
     var items = d.items.map(function (it) { return placeCard(it, dir); }).join("");
     var excluded = (d.excluded || []).slice(0, 4).map(function (x) {
       return '<li><strong>' + esc(x.place.name) + '</strong> — ' + esc(x.reason) + '</li>';
@@ -224,6 +233,7 @@
         : '숙박 ' + esc(d.lodging ? d.lodging.region : d.lodgingRegion) + (d.lodging ? ' · 모텔 중심(아래 숙박 섹션 참고)' : '')) +
       ' · ' + d.stats.startTime + '–' + d.stats.endTime + '</p>' +
       '</header>' +
+      depHtml +
       '<div class="day-items">' + items + '</div>' +
       (excluded ? '<details class="day-excluded"><summary>이번 DAY 제외 장소와 이유</summary><ul>' + excluded + '</ul></details>' : '') +
       '</section>';
@@ -231,7 +241,7 @@
 
   function renderSchedule(trip, activeDay) {
     var days = trip.days.filter(function (d) { return !activeDay || activeDay === "all" || d.dayIndex === activeDay; });
-    set("scheduleDays", days.map(function (d) { return dayCard(d, trip.dir); }).join(""));
+    set("scheduleDays", days.map(function (d) { return dayCard(d, trip.dir, trip.departure); }).join(""));
   }
 
   function renderDayFilter(trip, activeDay, onChange) {
@@ -274,8 +284,18 @@
     miniList("cafeList", "카페", collect(trip, function (it) { return it.category === "CAFE"; }), "배정된 카페가 없습니다.");
   }
 
-  /* ---------------- 숙박 (모텔 중심) ---------------- */
-  function renderLodging(trip) {
+  /* ---------------- 숙박 (모텔 중심 · 지역 선택 가능) ---------------- */
+  function lodgingOptionsFor(region) {
+    return (global.DATA.lodging(region) || []).slice(0, 3).map(function (o) {
+      return {
+        area: o.area, note: o.note,
+        naverUrl: "https://map.naver.com/p/search/" + encodeURIComponent(region + " " + o.area + " 모텔")
+      };
+    });
+  }
+
+  function renderLodging(trip, overrides, onChange) {
+    overrides = overrides || {};
     var wrap = $("lodgingWrap");
     if (trip.dayTrip || !trip.lodging || !trip.lodging.length) {
       if (wrap) wrap.hidden = true;
@@ -283,24 +303,92 @@
       return;
     }
     if (wrap) wrap.hidden = false;
-    var html = '<p class="hint">당일치기가 아니므로 각 밤의 숙박 지역을 확인했습니다. 특정 업소명이 아니라 모텔 밀집 지역과 검색 링크를 제공합니다(현재 DEMO · 실운영 시 숙박 예약 API 연동 필요).</p>';
+    var html = '<p class="hint">숙박 지역은 <strong>여행 경로·이동 계산과 무관</strong>합니다. 자동 판정값(그날 마지막 방문지가 속한 지역)을 기본으로 두되, 원하는 지역으로 바꿀 수 있습니다. 특정 업소명이 아니라 모텔 밀집 지역과 검색 링크를 제공합니다(현재 DEMO).</p>';
     html += '<div class="lodging-list">';
     trip.lodging.forEach(function (lo) {
-      html += '<article class="lodging-item">' +
-        '<h4>' + lo.night + '박째 · ' + esc(lo.region) + ' · ' + esc(lo.lodgingType) + '</h4>' +
-        '<p class="lodging-meta">DAY ' + lo.dayIndex + ' 일정 종료 후 이동(' + esc(lo.checkInFrom) + ' 무렵)' +
-        (lo.nearStop ? ' · 마지막 방문지: ' + esc(lo.nearStop) : '') + '</p>' +
+      var chosen = overrides[lo.night] || lo.region;
+      var isCustom = chosen !== lo.autoRegion;
+      var opts = lodgingOptionsFor(chosen);
+      var searchUrl = "https://map.naver.com/p/search/" + encodeURIComponent(chosen + " 모텔");
+      html += '<article class="lodging-item" data-night="' + lo.night + '">' +
+        '<h4>' + lo.night + '박째 숙박 · <span class="lodging-region">' + esc(chosen) + '</span>' +
+        (isCustom ? ' <span class="tag">직접 선택</span>' : '') + '</h4>' +
+        '<p class="lodging-meta">DAY ' + lo.dayIndex + ' 일정 종료(' + esc(lo.checkInFrom) + ' 무렵)' +
+        (lo.nearStop ? ' · 마지막 방문지: ' + esc(lo.nearStop) : '') +
+        ' · 자동 판정: ' + esc(lo.autoRegion) + '</p>' +
+        '<label class="lodging-pick">숙박 희망 지역 ' +
+        '<select data-night="' + lo.night + '">' +
+        C.REGION_ORDER.map(function (r) {
+          return '<option value="' + r + '"' + (r === chosen ? ' selected' : '') + '>' + esc(r) + (r === lo.autoRegion ? ' (자동)' : '') + '</option>';
+        }).join("") +
+        '</select></label>' +
         '<ul>' +
-        lo.options.map(function (o) {
+        opts.map(function (o) {
           return '<li><strong>' + esc(o.area) + '</strong> — ' + esc(o.note) +
             ' · <a href="' + o.naverUrl + '" target="_blank" rel="noopener">모텔 검색</a></li>';
         }).join("") +
         '</ul>' +
-        '<p class="lodging-note"><a href="' + lo.searchUrl + '" target="_blank" rel="noopener">' + esc(lo.region) + ' 모텔 전체 검색</a> · 요금·주차·객실 상태는 예약 전 확인하십시오.</p>' +
+        '<p class="lodging-note"><a href="' + searchUrl + '" target="_blank" rel="noopener">' + esc(chosen) + ' 모텔 전체 검색</a> · 요금·주차·객실 상태는 예약 전 확인하십시오.</p>' +
         '</article>';
     });
     html += '</div>';
     set("lodgingList", html);
+
+    var listEl = $("lodgingList");
+    if (listEl && onChange) {
+      listEl.querySelectorAll("select[data-night]").forEach(function (sel) {
+        sel.addEventListener("change", function () {
+          onChange(parseInt(sel.getAttribute("data-night"), 10), sel.value);
+        });
+      });
+    }
+  }
+
+  /* ---------------- 경로 저장 / 불러오기 (로컬, 백엔드 없음) ---------------- */
+  function renderRouteStore(routes, h) {
+    var el = $("routeStoreBody");
+    if (!el) return;
+    var list = routes && routes.length
+      ? '<ul class="saved-routes">' + routes.map(function (r) {
+          return '<li><span class="saved-routes__name">' + esc(r.name) + '</span>' +
+            '<span class="saved-routes__meta">' + esc(r.summary || "") + ' · ' + esc(new Date(r.savedAt).toLocaleString("ko-KR")) + '</span>' +
+            '<span class="saved-routes__act">' +
+            '<button type="button" class="btn btn--ghost" data-act="load" data-id="' + esc(r.id) + '">불러오기</button>' +
+            '<button type="button" class="btn btn--ghost" data-act="del" data-id="' + esc(r.id) + '">삭제</button>' +
+            '</span></li>';
+        }).join("") + '</ul>'
+      : '<p class="hint">저장된 경로가 없습니다. 코스를 만든 뒤 이름을 입력하고 저장하십시오.</p>';
+
+    el.innerHTML =
+      '<div class="route-store__save">' +
+      '<input type="text" id="routeName" placeholder="경로 이름 (예: 울산 3박4일 강릉)" maxlength="40">' +
+      '<button type="button" class="btn btn--primary" id="routeSaveBtn">이 경로 저장</button>' +
+      '</div>' +
+      list +
+      '<div class="route-store__io">' +
+      '<button type="button" class="btn btn--ghost" id="routeExportBtn">파일로 내보내기</button>' +
+      '<label class="btn btn--ghost" for="routeImportInput">파일에서 불러오기</label>' +
+      '<input type="file" id="routeImportInput" accept="application/json,.json" hidden>' +
+      '<button type="button" class="btn btn--ghost" id="routeShareBtn">공유 링크 복사</button>' +
+      '</div>' +
+      '<p class="hint">저장·불러오기는 이 브라우저에만 보관됩니다(백엔드 없음). 다른 기기로 옮기려면 "파일로 내보내기" 또는 "공유 링크 복사"를 사용하십시오.</p>';
+
+    var nameInput = $("routeName");
+    $("routeSaveBtn").addEventListener("click", function () { h.onSave((nameInput.value || "").trim()); });
+    nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); h.onSave((nameInput.value || "").trim()); } });
+    $("routeExportBtn").addEventListener("click", h.onExport);
+    $("routeShareBtn").addEventListener("click", h.onShare);
+    $("routeImportInput").addEventListener("change", function () {
+      if (this.files && this.files[0]) h.onImport(this.files[0]);
+      this.value = "";
+    });
+    el.querySelectorAll("button[data-act]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var id = b.getAttribute("data-id");
+        if (b.getAttribute("data-act") === "load") h.onLoad(id);
+        else h.onDelete(id);
+      });
+    });
   }
 
   function renderRegionWeatherDetail(weatherData, trip) {
@@ -334,6 +422,7 @@
     renderDayFilter: renderDayFilter,
     renderCategoryLists: renderCategoryLists,
     renderLodging: renderLodging,
+    renderRouteStore: renderRouteStore,
     renderRegionWeatherDetail: renderRegionWeatherDetail,
     toast: function (msg) {
       var t = $("toast"); if (!t) return;

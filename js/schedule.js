@@ -307,6 +307,30 @@
 
   function unique(a) { var s = {}, o = []; a.forEach(function (x) { if (!s[x]) { s[x] = 1; o.push(x); } }); return o; }
 
+  /* 네이버 지도 길찾기 딥링크: 출발지 -> 주요 경유지(일자별 첫 장소) -> 마지막 장소.
+     네이버는 경유지 포함 최대 5지점을 지원하므로 초과 시 균등 샘플링합니다. */
+  function naverDirectionsUrl(origin, dayResults) {
+    var pts = [{ lng: origin.lng, lat: origin.lat, name: origin.name }];
+    var stops = [];
+    dayResults.forEach(function (d) { d.items.forEach(function (it) { stops.push(it); }); });
+    if (!stops.length) return "";
+    var pick = [];
+    if (stops.length <= 4) pick = stops;
+    else {
+      // 첫/마지막 + 균등 3개
+      var idxs = [0];
+      for (var k = 1; k <= 2; k++) idxs.push(Math.round(k * (stops.length - 1) / 3));
+      idxs.push(stops.length - 1);
+      idxs = unique(idxs.map(String)).map(Number).sort(function (a, b) { return a - b; });
+      pick = idxs.map(function (i) { return stops[i]; });
+    }
+    pick.forEach(function (s) { pts.push({ lng: s.lng, lat: s.lat, name: s.name }); });
+    var seg = pts.map(function (p) {
+      return p.lng + "," + p.lat + "," + encodeURIComponent(p.name);
+    });
+    return "https://map.naver.com/p/directions/" + seg.join("/") + "/-/car";
+  }
+
   /* ---------------- 전체 여행 ---------------- */
   function validateInput(input) {
     var errs = [];
@@ -407,6 +431,7 @@
           dayIndex: d.dayIndex,
           date: d.date,
           region: region,
+          autoRegion: region,
           checkInFrom: lastStop ? lastStop.leave : d.stats.endTime,
           nearStop: lastStop ? lastStop.name : null,
           lodgingType: "모텔 중심",
@@ -419,10 +444,27 @@
     var lastDay = dayResults[dayResults.length - 1];
     if (lastDay) lastDay.lodging = { isLastDay: true, region: null };
 
+    // 출발지 -> 첫 목적지 경로 (울산 등 출발지에서 이어지는 이동)
+    var firstStop = dayResults[0] && dayResults[0].items[0];
+    var lastStopOverall = null;
+    for (var dd = dayResults.length - 1; dd >= 0 && !lastStopOverall; dd--) {
+      if (dayResults[dd].items.length) lastStopOverall = dayResults[dd].items[dayResults[dd].items.length - 1];
+    }
+    var departure = firstStop ? {
+      originId: origin.id, originName: origin.name, originLat: origin.lat, originLng: origin.lng,
+      toId: firstStop.id, toName: firstStop.name, toLat: firstStop.lat, toLng: firstStop.lng,
+      toRegion: firstStop.region,
+      startTime: dayResults[0].stats.startTime, arriveTime: firstStop.arrive,
+      min: firstStop.travelMin, km: firstStop.travelKm, roadType: firstStop.roadType,
+      naverDirections: naverDirectionsUrl(origin, dayResults)
+    } : null;
+
     var summary = summarize(input, origin, dir, dayResults);
     return {
       ok: true, dir: dir, origin: origin, input: input,
       days: dayResults, summary: summary,
+      departure: departure,
+      lastStop: lastStopOverall ? { name: lastStopOverall.name, region: lastStopOverall.region, lat: lastStopOverall.lat, lng: lastStopOverall.lng } : null,
       lodging: lodging,
       dayTrip: dayResults.length === 1,
       dataStatus: {

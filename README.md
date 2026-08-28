@@ -79,7 +79,8 @@ data/
   reviews.json             후기 신호/요약 내보내기 (rawReviews 는 비어 있음)
   indoor-attractions.json  실내 볼거리 후보 추출본
 scripts/
-  export-data.cjs          data/*.json 재생성 스크립트
+  export-data.cjs          내장 DEMO 데이터를 data/*.json 으로 재생성
+  fetch-tourapi.cjs        한국관광공사 TourAPI 로 data/places.json 실데이터 수집(로컬 실행)
 tests/
   verify-planner-donghae.cjs   정적/로직 검증
   verify-planner.cjs           기존 단일 파일(donghae-planner.html)용 검증
@@ -191,9 +192,24 @@ score = recent        * 0.15   // 최근 관심도 (DEMO 대체지표)
 ## 실데이터 연결 방법
 
 1. **관광 데이터(대한민국 구석구석 / 한국관광공사 TourAPI)**
-   - `data/places.json` 을 TourAPI(지역기반관광정보·소개정보·반복정보) 결과로 채우고 최상위 `"source"` 를 `"live"` 로 바꿉니다.
-   - 앱은 로드 시 `DATA.tryLoadExternal()` 로 이 파일을 읽어 `mergeVisitKoreaData()` 로 병합하고 데이터 상태를 `PARTIAL / LIVE` 로 올립니다.
-   - 관광지 유형을 분석해 `실내 / 실외 / 부분 실내 / 우천 적합 / 우천 부적합` 태그(= `category` + `weatherProfile`)를 채우십시오.
+
+   ### API 키 발급 (무료)
+   1. **공공데이터포털** [data.go.kr](https://www.data.go.kr) 회원가입(무료)
+   2. "**한국관광공사_국문 관광정보 서비스**"(TourAPI) 검색 → **활용신청** (개발계정, 대개 즉시 자동승인)
+   3. 마이페이지 → 오픈API → 인증키 확인 (**Encoding 키** 사용)
+   4. 무료. 기본 트래픽 **1,000회/일**(증량 신청 가능). 주요 오퍼레이션: `searchKeyword1`, `areaBasedList1`, `detailCommon1`, `detailIntro1`, `locationBasedList1`. contentTypeId: 12 관광지, 14 문화시설, 32 숙박, 38 쇼핑, 39 음식점.
+
+   ### 백엔드 없이 쓰는 법 — 로컬에서 수집해 정적 파일로 동결
+   TourAPI 는 브라우저 직접 호출 시 CORS 로 막히므로, **로컬에서 한 번 수집**해 `data/places.json` 으로 굳힙니다.
+   ```bash
+   node scripts/fetch-tourapi.cjs --key=발급받은Encoding키
+   # 운영시간·주차까지 채우려면(호출 많아짐):
+   node scripts/fetch-tourapi.cjs --key=... --details
+   ```
+   - 10개 지역 × 관광지/문화시설/음식점/쇼핑을 `searchKeyword1` 로 수집 → `data/places.json` 을 `"source":"live"` 로 저장(기존 DEMO 는 `data/places.demo.json` 로 백업).
+   - 앱은 다음 로드 시 `DATA.tryLoadExternal()` 로 이 파일을 읽어 **내장 DEMO 를 실데이터로 교체**하고 상태를 `LIVE` 로 올립니다.
+   - `weatherProfile`·`corridor` 는 카테고리에서 추정하므로, 정밀도가 필요하면 `data/places.json` 을 직접 보정하십시오.
+   - GitHub/Vercel 배포 시에는 갱신된 `data/places.json` 을 커밋하면 됩니다(런타임 키 불필요).
 2. **후기 데이터**
    - `ReviewEngine.fetchReviews(place)` 를 실제 검색 결과 반환 구현으로 교체하고, `data/reviews.json` 의 `rawReviews` 를 채웁니다.
 3. **날씨**
@@ -216,11 +232,26 @@ score = recent        * 0.15   // 최근 관심도 (DEMO 대체지표)
 - 지도 서비스 도메인 등록: NAVER Cloud Platform 콘솔의 Maps 애플리케이션에 배포 도메인을 Web 서비스 URL 로 등록해야 합니다.
 - **전체 코스 지도 이미지**: 지도 영역 하단의 "전체 코스 지도 이미지" 에 전체 일정을 한 장으로 나타낸 개요 지도(SVG)를 항상 생성합니다. 방문지 좌표를 축척한 위치에 방문 순서를 표시하고 DAY별 색으로 이동선을 잇습니다. "개요 지도 이미지 저장(SVG)" 로 내려받거나 "네이버 지도에서 전체 코스 열기" 링크를 사용할 수 있습니다.
 
-## 숙박 (모텔 중심)
+## 출발지 → 목적지 경로
+
+- 출발지(울산 등)에서 DAY1 첫 방문지까지의 이동을 별도로 계산해 **DAY1 카드 상단**("울산 출발 09:00 → OO 10:25 도착 · 약 70km · 85분 · 국도")과 **지도**(검은색 "출발" 마커 + 점선)에 표시합니다.
+- 개요 지도와 지도 영역 링크에 **"OO 출발 전체 길찾기(네이버)"** 딥링크를 제공합니다(출발지 + 주요 경유지 + 마지막 장소, 네이버 경유지 한도에 맞춰 최대 5지점 샘플링). 형식: `https://map.naver.com/p/directions/{lng},{lat},{name}/.../car`
+
+## 숙박 (모텔 중심 · 지역 선택 가능)
 
 - 당일치기(1일)가 아니면 각 밤의 숙박 지역을 자동 판정합니다(그날 마지막 방문지가 속한 지역).
+- **숙박 지역은 여행 경로·이동 계산과 무관합니다.** "숙박 지역 · 모텔 중심 추천" 섹션에서 밤별로 **원하는 지역을 직접 선택**할 수 있고(10개 지역 드롭다운), 선택 시 그 지역의 모텔 밀집 지역·검색 링크로 즉시 갱신됩니다(일정은 다시 계산되지 않음). 선택값은 저장·공유되는 경로에 함께 포함됩니다.
 - 특정 업소명이 아니라 지역별 **모텔 밀집 지역**과 네이버 "모텔 검색" 링크를 제공합니다(`data.js` 의 `LODGING`, 현재 DEMO). 실운영 시 숙박 예약 API(야놀자·여기어때·부킹 등) 연동으로 교체하십시오.
-- DAY 카드에는 숙박 지역이, "숙박 지역 · 모텔 중심 추천" 섹션에는 밤별 상세(체크인 예상 시각·마지막 방문지·모텔 밀집 지역)가 표시됩니다. 마지막 날은 "여행 종료" 로 표시됩니다.
+- 마지막 날은 "여행 종료" 로 표시됩니다.
+
+## 경로 저장 · 불러오기 (로컬 전용, 백엔드 없음)
+
+"경로 저장 · 불러오기" 패널에서:
+
+- **저장/불러오기/삭제**: 이름을 붙여 이 브라우저의 `localStorage`(`donghae-drive:routes:v1`)에 보관. 불러오면 입력값·숙박 선택을 복원하고 다시 계산합니다.
+- **파일로 내보내기 / 파일에서 불러오기**: 경로를 `donghae-route-*.json` 으로 저장·복원. 다른 기기로 옮길 때 사용.
+- **공유 링크 복사**: 현재 입력값+숙박 선택을 URL 해시(`#r=...`)로 인코딩한 링크를 클립보드에 복사. **PC에서 만든 코스를 모바일에서 그 링크로 열면** 자동으로 불러와 계산합니다(서버 불필요). 링크가 6KB를 넘으면 파일 내보내기를 안내합니다.
+- 저장 데이터는 기기별로 분리됩니다(동기화 서버 없음).
 
 ## TourAPI 설정
 
