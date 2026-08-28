@@ -193,6 +193,20 @@
       state.overlays.push(line);
     });
 
+    // 일차 간 이동선 (전날 마지막 -> 다음날 첫 장소). "순간이동" 이 아님을 지도에도 표시.
+    if (!opts.activeDay || opts.activeDay === "all") {
+      for (var di = 0; di < trip.days.length - 1; di++) {
+        var a = trip.days[di].items, b = trip.days[di + 1].items;
+        if (!a.length || !b.length) continue;
+        var moveLine = new maps.Polyline({
+          map: state.map,
+          path: [new maps.LatLng(a[a.length - 1].lat, a[a.length - 1].lng), new maps.LatLng(b[0].lat, b[0].lng)],
+          strokeColor: "#8a97a5", strokeWeight: 2.5, strokeOpacity: 0.9, strokeStyle: "shortdash"
+        });
+        state.overlays.push(moveLine);
+      }
+    }
+
     state.map.fitBounds(bounds);
     state.mode = "naver";
   }
@@ -220,6 +234,11 @@
       html += '<div class="map-fallback__day">';
       html += '<h4>DAY ' + d.dayIndex + ' · ' + escapeHtml(d.regions.join(" → ")) +
         ' <span class="wx-chip">' + escapeHtml(d.weatherLabel) + (d.rainAdaptive ? " · 우천 대응" : "") + '</span></h4>';
+      if (d.dayStart) {
+        html += '<p class="map-fallback__move">' +
+          (d.dayStart.isOrigin ? escapeHtml(d.dayStart.fromName) + ' 출발' : '전날 ' + escapeHtml(d.dayStart.fromName) + '에서 이동') +
+          ' → ' + escapeHtml(d.dayStart.toName) + ' · 약 ' + d.dayStart.km + 'km · ' + d.dayStart.min + '분</p>';
+      }
       html += '<ol class="map-fallback__list">';
       d.items.forEach(function (it) {
         html += '<li>' +
@@ -288,6 +307,16 @@
           DAY_COLORS[(day - 1) % DAY_COLORS.length] + '" stroke-width="2.5" stroke-opacity="0.75"/>');
       }
     });
+
+    // 일차 간 이동선 (전날 마지막 -> 다음날 첫 장소)
+    for (var mi = 0; mi < trip.days.length - 1; mi++) {
+      var da = trip.days[mi].items, db = trip.days[mi + 1].items;
+      if (!da.length || !db.length) continue;
+      var la = da[da.length - 1], fb = db[0];
+      svg.push('<line x1="' + px(la.lng).toFixed(1) + '" y1="' + py(la.lat).toFixed(1) +
+        '" x2="' + px(fb.lng).toFixed(1) + '" y2="' + py(fb.lat).toFixed(1) +
+        '" stroke="#8a97a5" stroke-width="2" stroke-dasharray="5 4" stroke-opacity="0.85"/>');
+    }
 
     // 출발지 -> 첫 목적지 경로
     if (dep) {

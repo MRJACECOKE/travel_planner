@@ -271,7 +271,22 @@
       lodgingRegion: ordered.length ? ordered[ordered.length - 1].place.region : C.REGION_ORDER[targetRegionIdx],
       lastCorridor: ordered.length ? ordered[ordered.length - 1].place.corridor : params.lastCorridor,
       lastPoint: ordered.length ? ordered[ordered.length - 1].place : params.startPoint,
-      endMin: tl.endMin
+      endMin: tl.endMin,
+      // 그날의 시작 이동: DAY1 은 출발지에서, DAY2+ 는 전날 마지막 방문지(=숙박지 인근)에서 첫 장소까지.
+      // 일차 간 이동이 "순간이동" 이 아님을 명시하기 위한 구간입니다.
+      dayStart: ordered.length ? {
+        dayIndex: params.dayIndex,
+        isOrigin: params.dayIndex === 1,
+        fromName: params.startPoint.name || (params.dayIndex === 1 ? "출발지" : "전날 마지막 방문지"),
+        fromRegion: params.startPoint.region || null,
+        fromLat: params.startPoint.lat, fromLng: params.startPoint.lng,
+        toName: ordered[0].place.name, toRegion: ordered[0].place.region,
+        toLat: ordered[0].place.lat, toLng: ordered[0].place.lng,
+        departAt: toHHMM(params.startMin),
+        arriveAt: ordered[0].arrive,
+        min: ordered[0].travelMin, km: ordered[0].travelKm, roadType: ordered[0].roadType,
+        crossRegion: params.startPoint.region ? params.startPoint.region !== ordered[0].place.region : false
+      } : null
     };
   }
 

@@ -186,6 +186,17 @@ chain
     ok("출발지→첫목적지 경로(departure) 존재", !!trip.departure && trip.departure.originName === "울산" &&
       trip.departure.min > 0 && trip.departure.km > 0, JSON.stringify(trip.departure && { o: trip.departure.originName, m: trip.departure.min }));
     ok("네이버 길찾기 딥링크 형식", !!trip.departure && /^https:\/\/map\.naver\.com\/p\/directions\//.test(trip.departure.naverDirections));
+    ok("모든 DAY 에 시작 이동(dayStart) 존재", trip.days.every(d => d.dayStart && d.dayStart.min >= 0 && d.dayStart.km >= 0 && d.dayStart.toName));
+    ok("DAY1 시작 이동은 출발지에서", trip.days[0].dayStart.isOrigin === true && trip.days[0].dayStart.fromName === "울산");
+    ok("DAY2+ 시작 이동은 전날 마지막 지점에서 (순간이동 아님)", trip.days.slice(1).every((d, i) => {
+      const prevLast = trip.days[i].items[trip.days[i].items.length - 1];
+      return d.dayStart.isOrigin === false &&
+        Math.abs(d.dayStart.fromLat - prevLast.lat) < 1e-6 &&
+        Math.abs(d.dayStart.fromLng - prevLast.lng) < 1e-6 &&
+        d.dayStart.min > 0;
+    }));
+    ok("총 주행거리에 일차간 이동 포함(누계 > 마지막날 단독)",
+      trip.summary.totalKm >= trip.days[trip.days.length - 1].stats.km);
     ok("숙박 밤 수 = 여행일수 - 1", trip.lodging.length === trip.days.length - 1, trip.lodging.length + " vs " + (trip.days.length - 1));
     ok("숙박에 autoRegion 기록", trip.lodging.every(lo => CONFIG.regionIndex(lo.autoRegion) >= 0));
     ok("각 숙박에 지역과 모텔 추천 존재", trip.lodging.every(lo =>

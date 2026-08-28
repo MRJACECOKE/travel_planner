@@ -203,17 +203,35 @@
       '</article>';
   }
 
+  function naverDir(a, b) {
+    return "https://map.naver.com/p/directions/" +
+      a.lng + "," + a.lat + "," + encodeURIComponent(a.name) + "/" +
+      b.lng + "," + b.lat + "," + encodeURIComponent(b.name) + "/-/car";
+  }
+  function withRegion(region, name) {
+    if (!region) return name;
+    return String(name).indexOf(region) === 0 ? name : region + " " + name;
+  }
+
   function dayCard(d, dir, departure) {
     var wxLine = d.weather
       ? d.weatherLabel + " · 강수확률 " + d.weather.pop + "% · 풍속 " + d.weather.windMs + "m/s"
       : "날씨 정보 없음";
     var depHtml = "";
-    if (d.dayIndex === 1 && departure) {
-      depHtml = '<div class="day-departure">' +
-        '<strong>' + esc(departure.originName) + ' 출발</strong> ' + departure.startTime +
-        ' → ' + esc(departure.toName) + ' ' + departure.arriveTime + ' 도착' +
-        ' · 약 ' + departure.km + 'km · ' + departure.min + '분 · ' + roadLabel(departure.roadType) + ' (예상)' +
-        (departure.naverDirections ? ' · <a href="' + departure.naverDirections + '" target="_blank" rel="noopener">네이버 길찾기</a>' : '') +
+    var ds = d.dayStart;
+    if (ds) {
+      var dirUrl = (d.dayIndex === 1 && departure && departure.naverDirections)
+        ? departure.naverDirections
+        : naverDir({ lat: ds.fromLat, lng: ds.fromLng, name: ds.fromName }, { lat: ds.toLat, lng: ds.toLng, name: ds.toName });
+      var lead = ds.isOrigin
+        ? '<strong>' + esc(ds.fromName) + ' 출발</strong>'
+        : '<strong>DAY ' + d.dayIndex + ' 시작 이동</strong>' +
+          (ds.crossRegion ? ' <span class="tag tag--move">🚗 지역 이동</span>' : '') +
+          ' · 전날 마지막 ' + esc(withRegion(ds.fromRegion, ds.fromName)) + '에서';
+      depHtml = '<div class="day-departure">' + lead + ' ' + ds.departAt +
+        ' → ' + esc(withRegion(ds.toRegion, ds.toName)) + ' ' + ds.arriveAt + ' 도착' +
+        ' · 약 ' + ds.km + 'km · ' + ds.min + '분 · ' + roadLabel(ds.roadType) + ' (예상)' +
+        ' · <a href="' + dirUrl + '" target="_blank" rel="noopener">네이버 길찾기</a>' +
         '</div>';
     }
     var items = d.items.map(function (it) { return placeCard(it, dir); }).join("");
